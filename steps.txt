@@ -1,0 +1,5 @@
+## Cub 3D
+
+- Makefile: compilar com a MLX42: gcc main.c ... libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
+- Validação de mapa
+- 
