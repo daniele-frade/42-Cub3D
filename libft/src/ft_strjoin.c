@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 15:56:41 by dfrade            #+#    #+#             */
-/*   Updated: 2023/09/18 19:32:00 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/10 19:51:12 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	i_result = 0;
 	i = 0;
-	while (s1[i])
+	while (s1 != NULL && s1[i] != '\0')
 	{
 		result[i_result] = s1[i];
 		i++;
 		i_result++;
 	}
 	i = 0;
-	while (s2[i])
+	while (s2 != NULL && s2[i] != '\0')
 	{
 		result[i_result] = s2[i];
 		i++;

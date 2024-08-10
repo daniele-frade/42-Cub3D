@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 16:09:36 by dfrade            #+#    #+#             */
-/*   Updated: 2023/09/18 19:32:09 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/10 19:40:14 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
-	while (s[i] != '\0')
+	while (s != NULL && s[i] != '\0')
 		i++;
 	return (i);
 }
