@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:18:00 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/10 19:55:21 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/18 18:39:36 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 #include "../includes/cub3d.h"
 
 
-int map_is_cub_file(char *file_name)
+int file_is_cub(char *file_name)
 {
 	if (ft_strlen(file_name) < 5)
 		return (0);
@@ -42,12 +42,11 @@ int map_is_cub_file(char *file_name)
 	return (1);
 }
 
-int check_and_get_map(t_map *map, char *file_name)
+int check_and_get_file(t_map *map, char *file_name)
 {
 	ssize_t i;
 	int fd;
 	char buffer[5];
-	char **matrix;
 	char *file_content;
 	char *temp;
 	
@@ -73,9 +72,9 @@ int check_and_get_map(t_map *map, char *file_name)
 		free(temp);
 	}
 	
-	matrix = ft_split(file_content, '\n');
+	map->matrix = ft_split(file_content, '\n');
 	
-	if (!matrix)
+	if (!map->matrix)
 	{
 		ft_printf("Error\n");
 		exit(1);
@@ -83,27 +82,120 @@ int check_and_get_map(t_map *map, char *file_name)
 	return (1);
 }
 
+int file_has_all_directions(t_map *map)
+{
+	int	line;
+	char **str;
+	t_flags flag;
 
+	ft_bzero(&flag, sizeof(t_flags));
+	str = map->matrix;
+	line = 0;
+	while(str[line] != NULL)
+	{
+		if (ft_strncmp(str[line], "NO ", 3) == 0)
+		{
+			if (flag.no_flag == 1)
+				return (0);
+			flag.no_flag = 1;
+		}
+		else if (ft_strncmp(str[line], "SO ", 3) == 0)
+		{
+			if (flag.so_flag == 1)
+				return (0);
+			flag.so_flag = 1;
+		}
+		else if (ft_strncmp(str[line], "EA ", 3) == 0)
+		{
+			if (flag.ea_flag == 1)
+				return (0);
+			flag.ea_flag = 1;	
+		}
+	
+		else if (ft_strncmp(str[line], "WE ", 3) == 0)
+		{
+			if (flag.we_flag == 1)
+				return (0);
+			flag.we_flag = 1;
+		}
+		else if (ft_strncmp(str[line], "C ", 2) == 0)
+		{
+			if (flag.c_flag == 1)
+				return (0);
+			flag.c_flag = 1;
+		}
+		else if (ft_strncmp(str[line], "F ", 2) == 0)
+		{
+			if (flag.f_flag == 1)
+				return (0);
+			flag.f_flag = 1;
+		}
+		else
+			return (0);
+		if (flag.no_flag == 1 && flag.so_flag == 1 && flag.ea_flag == 1 && flag.we_flag == 1 && flag.c_flag == 1 && flag.f_flag == 1)
+			return (1);
+		line++;
+	}
+	return (0);
+}
 
+int	file_has_all_paths(t_map *map) // falta validar o rgb
+{
+	char **str;
+	int line;
+	int col;
+	int	flag;
+
+	str = map->matrix;
+	line = 5;
+	flag = 0;
+	while(line >= 0)
+	{
+		if (str[line][0] == 'C' || str[line][0] == 'F')
+		{
+			col = 2;
+			while (str[line][col] != '\0' && str[line][col] == ' ')
+				col++;
+			if (str[line][col] != '\0' && ft_isdigit(str[line][col]) == 1)	
+				flag = 1;
+			else
+				flag = 0;	
+		}
+		else
+		{
+			col = 3;
+			while(str[line][col] != '\0' && str[line][col] == ' ')
+				col++;
+			if (str[line][col] != '\0')	
+				flag = 1;
+			else
+				flag = 0;
+		}
+		if (flag == 0)
+			return (0);
+		line--;
+	}
+	return (1);
+}
 
 int map_has_only_valid_chars(t_map *map)
 {
 	int line;
 	int col;
 	
-	line = 0;
-	while(map->map[line] != NULL)
+	line = 6;
+	while(map->matrix[line] != NULL)
 	{
 		col = 0;
-		while(map->map[line][col] != '\0')
+		while(map->matrix[line][col] != '\0')
 		{
-			if (map->map[line][col] != '0'
-				&& map->map[line][col] != '1'
-				&& map->map[line][col] != 'N'
-				&& map->map[line][col] != 'S'
-				&& map->map[line][col] != 'E'
-				&& map->map[line][col] != 'W'
-				&& map->map[line][col] != ' ')
+			if (map->matrix[line][col] != '0'
+				&& map->matrix[line][col] != '1'
+				&& map->matrix[line][col] != 'N'
+				&& map->matrix[line][col] != 'S'
+				&& map->matrix[line][col] != 'E'
+				&& map->matrix[line][col] != 'W'
+				&& map->matrix[line][col] != ' ')
 				return (0);
 			col++;
 		}
