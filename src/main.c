@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:17:57 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/18 17:43:32 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/20 19:28:29 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@ int main(int argc, char **argv)
 	}
 
 	if (file_has_all_paths(&map) == 0)
+	{
+		ft_printf("Error\n");
+		exit(1);
+	}
+
+	if (map_has_empty_line(&map) == 0)
 	{
 		ft_printf("Error\n");
 		exit(1);

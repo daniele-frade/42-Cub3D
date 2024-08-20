@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:18:00 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/20 18:57:06 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/20 19:24:57 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,10 +250,17 @@ int	map_has_empty_line(t_map *map)
 		if (counter == 6)
 			break ;
 	}
+	while (map->backup_content[i] == '\n')
+		i++;
 	while (map->backup_content[i] != '\0')
 	{
 		if (map->backup_content[i] == '\n' && map->backup_content[i + 1] == '\n')
-			return (0);
+		{
+			while (map->backup_content[i] == '\n')
+				i++;
+			if (map->backup_content[i] != '\0')
+				return (0);
+		}
 		i++;
 	}
 	return (1);
