@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 12:25:59 by dfrade            #+#    #+#             */
-/*   Updated: 2023/09/18 19:31:49 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/20 13:42:28 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,5 @@ char	*ft_strchr(const char *s, int c)
 		s++;
 	if (*s == (unsigned char)c)
 		return ((char *)s);
-	return (0);
+	return (NULL);
 }

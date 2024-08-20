@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/18 15:35:53 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/20 16:27:03 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 
 typedef struct s_map {
 	char **map;
-	char **matrix;	
+	char **matrix;
+	char *backup_content;
 }	t_map;
 
 typedef struct s_flags

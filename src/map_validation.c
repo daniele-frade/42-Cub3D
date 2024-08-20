@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:18:00 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/18 18:39:36 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/20 18:57:06 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int check_and_get_file(t_map *map, char *file_name)
 		file_content = ft_strjoin(file_content, buffer);
 		free(temp);
 	}
+	map->backup_content = file_content;
 	
 	map->matrix = ft_split(file_content, '\n');
 	
@@ -139,7 +140,7 @@ int file_has_all_directions(t_map *map)
 	return (0);
 }
 
-int	file_has_all_paths(t_map *map) // falta validar o rgb
+int	file_has_all_paths(t_map *map)
 {
 	char **str;
 	int line;
@@ -153,10 +154,7 @@ int	file_has_all_paths(t_map *map) // falta validar o rgb
 	{
 		if (str[line][0] == 'C' || str[line][0] == 'F')
 		{
-			col = 2;
-			while (str[line][col] != '\0' && str[line][col] == ' ')
-				col++;
-			if (str[line][col] != '\0' && ft_isdigit(str[line][col]) == 1)	
+			if (file_has_valid_rgb(str[line]) == 1)	
 				flag = 1;
 			else
 				flag = 0;	
@@ -174,6 +172,89 @@ int	file_has_all_paths(t_map *map) // falta validar o rgb
 		if (flag == 0)
 			return (0);
 		line--;
+	}
+	return (1);
+}
+
+int	file_has_valid_rgb(char *rgb)
+{
+	int		i;
+	int		j;
+	int		comma;
+	int		digit;
+
+	i = 1;
+	comma = 0;
+	digit = 0;
+	while (rgb[i] && rgb[i] == ' ')
+		i++;
+	if (rgb[i] == '\0')
+		return (0);
+	j = i;	
+	while (rgb[i] != '\0')
+	{
+		if (rgb[i] == ',')
+		{
+			digit = 0;
+			comma++;
+			if (comma > 2)
+				return (0);
+			i++;
+		}
+		if (ft_isdigit(rgb[i]) == 0)
+			return (0);
+		digit++;
+		if (digit > 3)
+			return (0);
+		i++;
+	}
+	if (comma < 2)
+		return (0);
+	if (rgb_has_valid_value(&rgb[j]))
+		return (1);
+	return (0);
+}
+
+int	rgb_has_valid_value(char *rgb)
+{
+	int	i;
+	int	value;
+
+	i = 0;
+	while (i < 3)
+	{
+		value = ft_atoi(rgb);
+		if (!(value >= 0 && value <= 255))
+			return (0);
+		while (*rgb && *rgb != ',')
+			rgb++;
+		i++;
+	}
+	return (1);
+}
+
+int	map_has_empty_line(t_map *map)
+{
+	int	i;
+	int counter;
+
+	i = 0;
+	counter = 0;
+	while(map->backup_content[i] != '\0')
+	{
+		while (map->backup_content[i] == '\n')
+			i++;
+		counter++;
+		while (map->backup_content[i] != '\n')
+			i++;
+		if (counter == 6)
+			break ;
+	}
+	while (map->backup_content[i] != '\0')
+	{
+		if (map->backup_content[i] == '\n' && map->backup_content[i + 1] == '\n')
+			return (0);
+		i++;
 	}
 	return (1);
 }
