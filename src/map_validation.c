@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danielefrade <danielefrade@student.42.f    +#+  +:+       +#+        */
+/*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:18:00 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/21 11:56:52 by danielefrad      ###   ########.fr       */
+/*   Updated: 2024/08/21 18:31:29 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,10 +284,10 @@ int	map_has_valid_nb_of_players(t_map *map)
 
 	player_count = 0;
 	line = 0;
-	while (map->matrix[line] != NULL)
+	while (map->matrix[line])
 	{
 		col = 0;
-		while (map->matrix[line][col] != '\0')
+		while (map->matrix[line][col])
 		{
 			if (ft_strchr("NSEW", map->matrix[line][col]) != NULL)
 			{
