@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
+/*   By: danielefrade <danielefrade@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 16:14:23 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/10 16:20:38 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/21 11:00:43 by danielefrad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int error()
+int error(char *msg)
 {
-	write(1, "Error\n Invalid arguments\n", 22);
+	while(*msg)
+		write(1, msg++, 1);
 	exit(1);
 }

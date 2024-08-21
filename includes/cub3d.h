@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
+/*   By: danielefrade <danielefrade@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/20 16:27:03 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/21 11:57:38 by danielefrad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,19 @@ typedef struct s_flags
 	int f_flag;
 }	t_flags;
 
+// map validation
+int file_is_cub(char *file_name);
+int check_and_get_file(t_map *map, char *file_name);
+int file_has_all_directions(t_map *map);
+int	file_has_all_paths(t_map *map);
+int	file_has_valid_rgb(char *rgb);
+int	rgb_has_valid_value(char *rgb);
+int	map_has_empty_line(t_map *map);
+int map_has_only_valid_chars(t_map *map);
+int	map_has_valid_nb_of_players(t_map *map);
+int	map_is_closed_by_walls(t_map *map);
 
-
+// error
+int error(char *msg);
 
 #endif

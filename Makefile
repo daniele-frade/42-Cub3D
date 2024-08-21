@@ -10,8 +10,9 @@ LIBFT 	 = 	libft/libft.a
 
 SRCDIR 	 = 	src/
 
-SRCS	 = 	$(addprefix $(SRCDIR), map_validation.c \
-			main.c)
+SRCS	 = 	$(addprefix $(SRCDIR),	map_validation.c \
+									utils.c \
+									main.c)
 
 OBJDIR	 =	bin/
 OBJS	 =	$(patsubst $(SRCDIR)%.c,$(OBJDIR)%.o,$(SRCS))
