@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:17:57 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/21 18:54:37 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/22 18:58:48 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int main(int argc, char **argv)
 	if (map_has_only_valid_chars(&map) == 0)
 		error("Error\nInvalid map characteres\n");
 	
-	// if(map_has_valid_nb_of_players(&map) == 0)
-	// 	error("Error\nInvalid number of player\n");
+	if(map_has_valid_nb_of_players(&map) == 0)
+		error("Error\nInvalid number of player\n");
 
 	// if (map_is_closed_by_walls(&map) == 0)
 	// {

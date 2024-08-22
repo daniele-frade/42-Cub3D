@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:18:00 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/21 18:31:29 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/22 20:35:10 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,7 +283,7 @@ int	map_has_valid_nb_of_players(t_map *map)
 	int	col;
 
 	player_count = 0;
-	line = 0;
+	line = 6;
 	while (map->matrix[line])
 	{
 		col = 0;
@@ -303,22 +303,56 @@ int	map_has_valid_nb_of_players(t_map *map)
 		return (0);
 	return (1);
 }
-// int	map_is_closed_by_walls(t_map *map)
-// {
-// 	int	line;
-// 	int	col;
+void seta_para_direita()
+{
+	if (
+}
 
-// 	line = 0;
-// 	while (map->map[line] != NULL)
-// 	{
-// 		col = 0;
-// 		while (map->map[line][col] != '\0')
-// 		{
-// 			// if (something_is_wrong() == 1)
-// 			// 	return (0);
-// 			col++;
-// 		}
-// 		line++;
-// 	}
-// 	return (1);
-// }
+int	map_is_closed_by_walls(t_map *map)
+{
+	int	line;
+	int	col;
+
+	line = 6;
+	while (map->matrix[line] != NULL)
+	{
+		col = 0;
+		while (map->matrix[line][col] != '\0')
+		{
+			if(map->matrix[line][col] == '0')
+			{
+				if (map->matrix[line][col + 1] != '\0' && map->matrix[line][col + 1] != '0'
+					&& map->matrix[line][col + 1] != '1'
+					&& map->matrix[line][col + 1] != 'N'
+					&& map->matrix[line][col + 1] != 'S'
+					&& map->matrix[line][col + 1] != 'W'
+					&& map->matrix[line][col + 1] != 'E')
+					return (0);
+				if (col != 0 && map->matrix[line][col - 1] != '0'
+					&& map->matrix[line][col - 1] != '1'
+					&& map->matrix[line][col - 1] != 'N'
+					&& map->matrix[line][col - 1] != 'S'
+					&& map->matrix[line][col - 1] != 'W'
+					&& map->matrix[line][col - 1] != 'E')
+					return (0);
+				if (map->matrix[line + 1] != NULL && map->matrix[line + 1][col] != '0'
+					&& map->matrix[line + 1][col] != '1'
+					&& map->matrix[line + 1][col] != 'N'
+					&& map->matrix[line + 1][col] != 'S'
+					&& map->matrix[line + 1][col] != 'W'
+					&& map->matrix[line + 1][col] != 'E')
+					return (0);
+				if (line != 0 && map->matrix[line - 1][col] != '0'
+					&& map->matrix[line - 1][col] != '1'
+					&& map->matrix[line - 1][col] != 'N'
+					&& map->matrix[line - 1][col] != 'S'
+					&& map->matrix[line - 1][col] != 'W'
+					&& map->matrix[line - 1][col] != 'E')
+					return (0);
+			}
+			col++;
+		}
+		line++;
+	}
+	return (1);
+}
