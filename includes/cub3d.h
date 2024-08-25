@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danielefrade <danielefrade@student.42.f    +#+  +:+       +#+        */
+/*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/21 11:57:38 by danielefrad      ###   ########.fr       */
+/*   Updated: 2024/08/25 16:43:50 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,20 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdbool.h>
 # include <math.h>
 # include <fcntl.h>
 
+# define WIDTH 512
+# define HEIGHT 512
+
 typedef struct s_map {
-	char **map;
-	char **matrix;
-	char *backup_content;
+	char	**map;
+	char	**matrix;
+	char	*backup_content;
+	char	**rgb;
+	int		p_position_x;
+	int		p_position_y;
 }	t_map;
 
 typedef struct s_flags
