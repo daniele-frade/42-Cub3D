@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:17:57 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/25 16:36:30 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/25 17:31:53 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void ft_randomize(void* param)
 void ft_hook(void* param)
 {
 	mlx_t* mlx = param;
+
+	puts("Entrei aqui");
 
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
@@ -99,6 +101,7 @@ int main(int argc, char **argv)
 	image = mlx_new_image(mlx, 128, 128);
 	mlx_image_to_window(mlx, image, 0, 0);
 	mlx_loop_hook(mlx, ft_randomize, mlx);
+	mlx_loop_hook(mlx, ft_hook, mlx);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
 	
