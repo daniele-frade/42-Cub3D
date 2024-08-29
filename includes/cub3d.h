@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/25 16:43:50 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/29 18:40:57 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ typedef struct s_flags
 int file_is_cub(char *file_name);
 int check_and_get_file(t_map *map, char *file_name);
 int file_has_all_directions(t_map *map);
-int	file_has_all_paths(t_map *map);
-int	file_has_valid_rgb(char *rgb);
+int	directions_has_all_paths(t_map *map);
+int	file_has_valid_rgb(t_map *map);
+int	rgb_has_valid_sintax(char *rgb);
 int	rgb_has_valid_value(char *rgb);
 int	map_has_empty_line(t_map *map);
 int map_has_only_valid_chars(t_map *map);

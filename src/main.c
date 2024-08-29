@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:17:57 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/25 17:31:53 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/29 18:43:01 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ void ft_hook(void* param)
 {
 	mlx_t* mlx = param;
 
-	puts("Entrei aqui");
-
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
 	if (mlx_is_key_down(mlx, MLX_KEY_UP))
@@ -82,9 +80,12 @@ int main(int argc, char **argv)
 	if (file_has_all_directions(&map) == 0)
 		error("Error\nInvalid map file (wrong directions)\n");
 
-	if (file_has_all_paths(&map) == 0)
+	if (directions_has_all_paths(&map) == 0)
 		error("Error\nInvalid map file (wrong paths)\n");
 
+	if (file_has_valid_rgb(&map) == 0)
+		error("Error\nInvalid map file (wrong rgb)\n");
+	
 	if (map_has_empty_line(&map) == 0)
 		error("Error\nInvalid map (empty line)\n");
 	

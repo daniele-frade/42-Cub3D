@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:18:00 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/23 18:53:59 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/29 19:22:59 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int file_has_all_directions(t_map *map)
 	return (0);
 }
 
-int	file_has_all_paths(t_map *map)
+int	directions_has_all_paths(t_map *map)
 {
 	char **str;
 	int line;
@@ -137,31 +137,46 @@ int	file_has_all_paths(t_map *map)
 	flag = 0;
 	while(line >= 0)
 	{
-		if (str[line][0] == 'C' || str[line][0] == 'F')
-		{
-			if (file_has_valid_rgb(str[line]) == 1)	
-				flag = 1;
-			else
-				flag = 0;	
-		}
+		col = 3;
+		while(str[line][col] != '\0' && str[line][col] == ' ')
+			col++;
+		if (str[line][col] != '\0')	
+			flag = 1;
 		else
-		{
-			col = 3;
-			while(str[line][col] != '\0' && str[line][col] == ' ')
-				col++;
-			if (str[line][col] != '\0')	
-				flag = 1;
-			else
-				flag = 0;
-		}
+			flag = 0;
+		
 		if (flag == 0)
 			return (0);
 		line--;
 	}
 	return (1);
 }
+int file_has_valid_rgb(t_map *map)
+{
+	char	**str;
+	int		line;
+	int		flag;
 
-int	file_has_valid_rgb(char *rgb)
+	str = map->matrix;
+	flag = 0;
+	line = 5;
+	while (line >= 0)
+	{
+		if (str[line][0] == 'C' || str[line][0] == 'F')
+		{
+			if (rgb_has_valid_sintax(str[line]) == 1)	
+				flag = 1;
+			else
+				flag = 0;
+			if (flag == 0)
+				return (0);	
+		}
+		line--;
+	}
+	return (1);
+}
+
+int	rgb_has_valid_sintax(char *rgb)
 {
 	int		i;
 	int		j;
@@ -213,6 +228,7 @@ int	rgb_has_valid_value(char *rgb)
 			return (0);
 		while (*rgb && *rgb != ',')
 			rgb++;
+		rgb++;
 		i++;
 	}
 	return (1);
