@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:17:57 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/29 18:43:01 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/29 19:57:19 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,35 +68,9 @@ int main(int argc, char **argv)
 	mlx_t	*mlx;
 
 	ft_bzero(&map, sizeof(t_map));
-	
-	if (argc != 2)
-		error("Error\nInvalid arguments\n");
-	
-	if (file_is_cub(argv[1]) == 0)
-		error("Error\nInvalid map file\n");
-	
+	arguments_validation(argc, argv[1]);
 	check_and_get_file(&map, argv[1]);
-	
-	if (file_has_all_directions(&map) == 0)
-		error("Error\nInvalid map file (wrong directions)\n");
-
-	if (directions_has_all_paths(&map) == 0)
-		error("Error\nInvalid map file (wrong paths)\n");
-
-	if (file_has_valid_rgb(&map) == 0)
-		error("Error\nInvalid map file (wrong rgb)\n");
-	
-	if (map_has_empty_line(&map) == 0)
-		error("Error\nInvalid map (empty line)\n");
-	
-	if (map_has_only_valid_chars(&map) == 0)
-		error("Error\nInvalid map characteres\n");
-	
-	if(map_has_valid_nb_of_players(&map) == 0)
-		error("Error\nInvalid number of player\n");
-
-	if (map_is_closed_by_walls(&map) == 0)
-		error("Error\nMap is not closed by walls\n");
+	map_validation(&map);
 	
 	mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
 	image = mlx_new_image(mlx, 128, 128);

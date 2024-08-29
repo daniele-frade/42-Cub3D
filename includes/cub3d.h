@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/29 18:40:57 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/29 20:17:36 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ typedef struct s_map {
 	char	**map;
 	char	**matrix;
 	char	*backup_content;
-	char	**rgb;
+	int		map_size;
 	int		p_position_x;
 	int		p_position_y;
+	char	**textures;
+	char	**rgb;
 }	t_map;
 
 typedef struct s_flags
@@ -47,17 +49,19 @@ typedef struct s_flags
 }	t_flags;
 
 // map validation
-int file_is_cub(char *file_name);
-int check_and_get_file(t_map *map, char *file_name);
-int file_has_all_directions(t_map *map);
-int	directions_has_all_paths(t_map *map);
-int	file_has_valid_rgb(t_map *map);
-int	rgb_has_valid_sintax(char *rgb);
-int	rgb_has_valid_value(char *rgb);
-int	map_has_empty_line(t_map *map);
-int map_has_only_valid_chars(t_map *map);
-int	map_has_valid_nb_of_players(t_map *map);
-int	map_is_closed_by_walls(t_map *map);
+void	arguments_validation(int argc, char *map_file);
+void	map_validation(t_map *map);
+int		file_is_cub(char *file_name);
+int		check_and_get_file(t_map *map, char *file_name);
+int		file_has_all_directions(t_map *map);
+int		directions_has_all_paths(t_map *map);
+int		file_has_valid_rgb(t_map *map);
+int		rgb_has_valid_sintax(char *rgb);
+int		rgb_has_valid_value(char *rgb);
+int		map_has_empty_line(t_map *map);
+int		map_has_only_valid_chars(t_map *map);
+int		map_has_valid_nb_of_players(t_map *map);
+int		map_is_closed_by_walls(t_map *map);
 
 // error
 int error(char *msg);

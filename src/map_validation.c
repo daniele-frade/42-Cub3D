@@ -6,11 +6,37 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:18:00 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/29 19:22:59 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/29 20:05:39 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+void arguments_validation(int argc, char *map_file)
+{
+	if (argc != 2)
+		error("Error\nInvalid arguments\n");
+	if (file_is_cub(map_file) == 0)
+		error("Error\nInvalid map file\n");
+}
+
+void map_validation(t_map *map)
+{
+	if (file_has_all_directions(map) == 0)
+		error("Error\nInvalid map file (wrong directions)\n");
+	if (directions_has_all_paths(map) == 0)
+		error("Error\nInvalid map file (wrong paths)\n");
+	if (file_has_valid_rgb(map) == 0)
+		error("Error\nInvalid map file (wrong rgb)\n");
+	if (map_has_empty_line(map) == 0)
+		error("Error\nInvalid map (empty line)\n");
+	if (map_has_only_valid_chars(map) == 0)
+		error("Error\nInvalid map characteres\n");
+	if(map_has_valid_nb_of_players(map) == 0)
+		error("Error\nInvalid number of player\n");
+	if (map_is_closed_by_walls(map) == 0)
+		error("Error\nMap is not closed by walls\n");
+}
 
 int file_is_cub(char *file_name)
 {
