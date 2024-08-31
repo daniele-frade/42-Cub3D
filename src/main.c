@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:17:57 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/29 19:57:19 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/30 22:13:55 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int main(int argc, char **argv)
 	mlx_loop_hook(mlx, ft_hook, mlx);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
-	
+	free_matrix(map.matrix);
 	//print_matrix(&map);
 	//ft_printf("Compilou\n");
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/29 20:17:36 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/30 20:30:19 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int		map_has_valid_nb_of_players(t_map *map);
 int		map_is_closed_by_walls(t_map *map);
 
 // error
-int error(char *msg);
+void	free_and_exit(char **matrix, char *msg);
+void	free_matrix(char **matrix);
+int		error(char *msg);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:18:00 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/29 20:05:39 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/30 22:04:08 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@ void arguments_validation(int argc, char *map_file)
 void map_validation(t_map *map)
 {
 	if (file_has_all_directions(map) == 0)
-		error("Error\nInvalid map file (wrong directions)\n");
+		free_and_exit(map->matrix, "Error\nInvalid map file (wrong directions)\n");
 	if (directions_has_all_paths(map) == 0)
-		error("Error\nInvalid map file (wrong paths)\n");
+		free_and_exit(map->matrix, "Error\nInvalid map file (wrong paths)\n");
 	if (file_has_valid_rgb(map) == 0)
-		error("Error\nInvalid map file (wrong rgb)\n");
+		free_and_exit(map->matrix, "Error\nInvalid map file (wrong rgb)\n");
 	if (map_has_empty_line(map) == 0)
-		error("Error\nInvalid map (empty line)\n");
+		free_and_exit(map->matrix, "Error\nInvalid map (empty line)\n");
 	if (map_has_only_valid_chars(map) == 0)
-		error("Error\nInvalid map characteres\n");
+		free_and_exit(map->matrix, "Error\nInvalid map characteres\n");
 	if(map_has_valid_nb_of_players(map) == 0)
-		error("Error\nInvalid number of player\n");
+		free_and_exit(map->matrix, "Error\nInvalid number of player\n");
 	if (map_is_closed_by_walls(map) == 0)
-		error("Error\nMap is not closed by walls\n");
+		free_and_exit(map->matrix, "Error\nMap is not closed by walls\n");
 }
 
 int file_is_cub(char *file_name)
@@ -82,13 +82,17 @@ int check_and_get_file(t_map *map, char *file_name)
 		file_content = ft_strjoin(file_content, buffer);
 		free(temp);
 	}
+	
+	close(fd);
+	
 	map->backup_content = file_content;
 	
 	map->matrix = ft_split(file_content, '\n');
 	
 	if (!map->matrix)
 	{
-		ft_printf("Error\n");
+		ft_printf("Error\nFailed to split file content into lines\n");
+		free(file_content);
 		exit(1);
 	}
 	return (1);
@@ -288,8 +292,11 @@ int	map_has_empty_line(t_map *map)
 			if (map->backup_content[i] != '\0')
 				return (0);
 		}
-		i++;
+		else
+			i++;
 	}
+	free(map->backup_content);
+	map->backup_content = NULL;
 	return (1);
 }
 
