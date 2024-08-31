@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/30 20:30:19 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/31 13:01:10 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <math.h>
 # include <fcntl.h>
 
-# define WIDTH 512
-# define HEIGHT 512
+// # define WIDTH 512
+// # define HEIGHT 512
 
 typedef struct s_map {
 	char	**map;
