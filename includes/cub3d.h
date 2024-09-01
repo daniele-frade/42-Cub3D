@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/08/31 13:01:10 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/01 13:41:09 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 // # define HEIGHT 512
 
 typedef struct s_map {
-	char	**map;
+	char	**map_matrix;
 	char	**matrix;
 	char	*backup_content;
 	int		map_size;
@@ -67,5 +67,8 @@ int		map_is_closed_by_walls(t_map *map);
 void	free_and_exit(char **matrix, char *msg);
 void	free_matrix(char **matrix);
 int		error(char *msg);
+
+void	draw_map2D(t_map *map);
+void    print_square(mlx_image_t *image, int size, int start_x, int start_y, int color);
 
 #endif
