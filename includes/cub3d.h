@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/01 13:41:09 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/01 16:59:15 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,11 @@
 // # define HEIGHT 512
 
 typedef struct s_map {
-	char	**map_matrix;
 	char	**matrix;
 	char	*backup_content;
-	int		map_size;
-	int		p_position_x;
-	int		p_position_y;
+	char	**map_matrix;
+	int		p_position_line;
+	int		p_position_col;
 	char	**textures;
 	char	**rgb;
 }	t_map;
@@ -63,12 +62,20 @@ int		map_has_only_valid_chars(t_map *map);
 int		map_has_valid_nb_of_players(t_map *map);
 int		map_is_closed_by_walls(t_map *map);
 
+// map processing
+void	get_map_matrix(t_map *map);
+void	get_player_position(t_map *map);
+
 // error
 void	free_and_exit(char **matrix, char *msg);
 void	free_matrix(char **matrix);
 int		error(char *msg);
+void	print_matrix(char **matrix);
 
-void	draw_map2D(t_map *map);
-void    print_square(mlx_image_t *image, int size, int start_x, int start_y, int color);
+
+// MLX
+void 	key_data(mlx_key_data_t data, void *map);
+void	print_map2D(t_map *map);
+void	print_square(mlx_image_t *image, int size, int start_line, int start_col, int color);
 
 #endif

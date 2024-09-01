@@ -11,6 +11,7 @@ LIBFT 	 = 	libft/libft.a
 SRCDIR 	 = 	src/
 
 SRCS	 = 	$(addprefix $(SRCDIR),	map_validation.c \
+									map_processing.c \
 									utils.c \
 									main.c)
 

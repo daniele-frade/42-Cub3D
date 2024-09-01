@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:18:00 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/01 13:46:23 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/01 15:53:26 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,16 +96,6 @@ int check_and_get_file(t_map *map, char *file_name)
 		exit(1);
 	}
 	return (1);
-}
-
-void	get_map_matrix(t_map *map)
-{
-	int i;
-	int line;
-	
-	i = 0;
-	line = 6;
-	map->map_matrix = &map->matrix[6];
 }
 
 int file_has_all_directions(t_map *map)
