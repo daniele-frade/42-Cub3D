@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:17:57 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/01 17:31:35 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/07 15:14:41 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int main(int argc, char **argv)
 	// pós file validation, get just map matrix
 	get_map_matrix(&map);
 	get_player_position(&map);
+	set_rgb_color(&map);
 	
 	// print map_matrix
 	print_matrix(map.map_matrix);

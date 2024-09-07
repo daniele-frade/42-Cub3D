@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/01 16:59:15 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/07 15:41:21 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,13 @@
 # include <math.h>
 # include <fcntl.h>
 
-// # define WIDTH 512
-// # define HEIGHT 512
+enum e_directions
+{
+	NO = 0,
+	SO,
+	EA,
+	WE
+};
 
 typedef struct s_map {
 	char	**matrix;
@@ -34,7 +39,15 @@ typedef struct s_map {
 	int		p_position_line;
 	int		p_position_col;
 	char	**textures;
-	char	**rgb;
+	char	*f_rgb_str;
+	char	*c_rgb_str;
+	int		*f_rgb_int;
+	int		*c_rgb_int;		
+	int		r;
+	int		g;
+	int		b;
+	char	**directions;
+	char	**text_path;
 }	t_map;
 
 typedef struct s_flags
@@ -65,6 +78,8 @@ int		map_is_closed_by_walls(t_map *map);
 // map processing
 void	get_map_matrix(t_map *map);
 void	get_player_position(t_map *map);
+int		get_color_from_str(t_map *map, char *rgb_str) ;
+void	set_rgb_color(t_map *map);
 
 // error
 void	free_and_exit(char **matrix, char *msg);
