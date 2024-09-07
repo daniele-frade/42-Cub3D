@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 20:05:03 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/07 15:47:22 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/07 15:59:12 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int get_color_from_str(t_map *map, char *rgb_str)
     map->b = ft_atoi(rgb_split[2]);
 
     // Configura a cor em formato RGB (alfa 255)
-    color = (uint32_t)(r << 16 | g << 8 | b | 0xFF000000);
+    color = (uint32_t)(r << 24 | g << 16 | b << 8 | 0xFF);
 
     // Libera a memória alocada
     ft_free_matrix((void **)split);
@@ -83,6 +83,8 @@ void set_rgb_color(t_map *map)
     map->f_rgb_int = get_color_from_str(map, map->f_rgb_str);
     map->c_rgb_int = get_color_from_str(map, map->c_rgb_str);
 }
+
+// antes tenho q verificar se consigo abrir o arquivo
 
 int load_textures_paths(t_map *map)
 {

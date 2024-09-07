@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/07 15:41:21 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/07 15:57:04 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_map {
 	int		g;
 	int		b;
 	char	**directions;
-	char	**text_path;
+	mlx_texture_t	*text_path[4];
 }	t_map;
 
 typedef struct s_flags
