@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 20:05:03 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/09 18:27:54 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/09 19:34:38 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void    get_map_matrix(t_map *map)
 {
 	map->map_matrix = &map->matrix[6];
 }
+
+// 1 - player position
 
 void    get_player_position(t_map *map)
 {
@@ -43,6 +45,8 @@ void    get_player_position(t_map *map)
     }
 }
 
+// 2 - rgb value
+
 uint32_t    get_color_from_rgb(int r, int g, int b, int a)
 {
     uint32_t    color;
@@ -52,14 +56,10 @@ uint32_t    get_color_from_rgb(int r, int g, int b, int a)
     
 }
 
-void    get_color_from_str(t_map *map, char *rgb_str) 
+void    get_color_from_str(t_map *map, char *rgb_str, uint32_t *rgb_array) 
 {
     char **split;
     char **rgb_split;
-
-    // Verifica se a string é válida
-    if (rgb_str == NULL)
-        return (NULL);
 
     // Divide a string para separar o identificador e a parte RGB
     split = ft_split(rgb_str, ' ');
@@ -72,9 +72,7 @@ void    get_color_from_str(t_map *map, char *rgb_str)
         return (NULL);
 
     // Converte os valores RGB para inteiros
-    map->r = ft_atoi(rgb_split[0]);
-    map->g = ft_atoi(rgb_split[1]);
-    map->b = ft_atoi(rgb_split[2]);
+    *rgb_array = get_color_from_rgb(ft_atoi(rgb_split[0]), ft_atoi(rgb_split[1]), ft_atoi(rgb_split[2]), 255);
 
     // Libera a memória alocada
     ft_free_matrix((void **)split);
@@ -83,12 +81,14 @@ void    get_color_from_str(t_map *map, char *rgb_str)
 
 void set_rgb_color(t_map *map)
 {
-    get_color_from_rgb(map->r, map->g, map->b, 0xFF);
-    get_color_from_str(map, map->f_rgb_str);
-    get_color_from_str(map, map->c_rgb_str);
+    get_color_from_str(map, map->f_rgb_str, &map->f_rgb_int);
+    get_color_from_str(map, map->c_rgb_str, &map->c_rgb_int);
 }
 
-// antes tenho q verificar se consigo abrir o arquivo
+// 2 - get texture paths and file:
+
+
+// verificar se consigo abrir o arquivo
 
 int load_textures_paths(t_map *map)
 {

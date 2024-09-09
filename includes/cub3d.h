@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/09 18:26:53 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/09 19:35:07 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,31 +33,28 @@ enum e_directions
 };
 
 typedef struct s_map {
-	char	**matrix;
-	char	*backup_content;
-	char	**map_matrix;
-	int		p_position_line;
-	int		p_position_col;
-	char	*textures[4];
-	char	*f_rgb_str;
-	char	*c_rgb_str;
-	int		*f_rgb_int;
-	int		*c_rgb_int;		
-	int		r;
-	int		g;
-	int		b;
-	char	**directions;
-	mlx_texture_t	*text_path[4];
+	char			**matrix;
+	char			*backup_content;
+	char			**map_matrix;
+	int				p_position_line;
+	int				p_position_col;
+	char			*textures[4];
+	char			*f_rgb_str;
+	char			*c_rgb_str;
+	uint32_t		f_rgb_int;
+	uint32_t		c_rgb_int;
+	char			**directions;
+	mlx_texture_t	*text_path[4]; // para mlx
 }	t_map;
 
 typedef struct s_flags
 {
-	int no_flag;
-	int so_flag;
-	int ea_flag;
-	int we_flag;
-	int c_flag;
-	int f_flag;
+	int				no_flag;
+	int				so_flag;
+	int				ea_flag;
+	int				we_flag;
+	int				c_flag;
+	int				f_flag;
 }	t_flags;
 
 // map validation
@@ -77,10 +74,12 @@ int			map_is_closed_by_walls(t_map *map);
 
 // map processing
 void		get_map_matrix(t_map *map);
+
 void		get_player_position(t_map *map);
-int			get_color_from_str(t_map *map, char *rgb_str) ;
-void		set_rgb_color(t_map *map);
+
 uint32_t	get_color_from_rgb(int r, int g, int b, int a);
+void		get_color_from_str(t_map *map, char *rgb_str, uint32_t *rgb_array);
+void		set_rgb_color(t_map *map);
 
 // error
 void		free_and_exit(char **matrix, char *msg);
