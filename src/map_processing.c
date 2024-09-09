@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 20:05:03 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/07 15:59:12 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/09 18:27:54 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,15 @@ void    get_player_position(t_map *map)
     int col;
  
     line = 0;    
-    puts("Aqui");
     while (map->map_matrix[line])
     {
         col = 0;
         while (map->map_matrix[line][col])
         {
-            if (map->map_matrix[line][col] == 'N' || map->map_matrix[line][col] == 'S' || map->map_matrix[line][col] == 'W' || map->map_matrix[line][col] == 'E')
+            if (map->map_matrix[line][col] == 'N'
+                || map->map_matrix[line][col] == 'S'
+                || map->map_matrix[line][col] == 'W'
+                || map->map_matrix[line][col] == 'E')
             {
                 map->p_position_line = line;
                 map->p_position_col = col;
@@ -39,15 +41,21 @@ void    get_player_position(t_map *map)
         }
         line++;
     }
-    puts("Fim");
 }
 
-int get_color_from_str(t_map *map, char *rgb_str) 
+uint32_t    get_color_from_rgb(int r, int g, int b, int a)
+{
+    uint32_t    color;
+    
+    color = (uint32_t)(r << 24 | g << 16 | b << 8 | a);
+    return (color);
+    
+}
+
+void    get_color_from_str(t_map *map, char *rgb_str) 
 {
     char **split;
     char **rgb_split;
-    uint32_t color;
-    int r, g, b;
 
     // Verifica se a string é válida
     if (rgb_str == NULL)
@@ -68,20 +76,16 @@ int get_color_from_str(t_map *map, char *rgb_str)
     map->g = ft_atoi(rgb_split[1]);
     map->b = ft_atoi(rgb_split[2]);
 
-    // Configura a cor em formato RGB (alfa 255)
-    color = (uint32_t)(r << 24 | g << 16 | b << 8 | 0xFF);
-
     // Libera a memória alocada
     ft_free_matrix((void **)split);
     ft_free_matrix((void **)rgb_split);
-
-    return (color);
 }
 
 void set_rgb_color(t_map *map)
 {
-    map->f_rgb_int = get_color_from_str(map, map->f_rgb_str);
-    map->c_rgb_int = get_color_from_str(map, map->c_rgb_str);
+    get_color_from_rgb(map->r, map->g, map->b, 0xFF);
+    get_color_from_str(map, map->f_rgb_str);
+    get_color_from_str(map, map->c_rgb_str);
 }
 
 // antes tenho q verificar se consigo abrir o arquivo
