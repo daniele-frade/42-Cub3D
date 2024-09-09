@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/09 19:35:07 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/09 20:20:44 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,12 @@ typedef struct s_map {
 	char			**map_matrix;
 	int				p_position_line;
 	int				p_position_col;
-	char			*textures[4];
+	char			*text_path[4]; // caminho do map
 	char			*f_rgb_str;
 	char			*c_rgb_str;
 	uint32_t		f_rgb_int;
 	uint32_t		c_rgb_int;
-	char			**directions;
-	mlx_texture_t	*text_path[4]; // para mlx
+	mlx_texture_t	*textures[4]; // para mlx
 }	t_map;
 
 typedef struct s_flags
@@ -77,9 +76,14 @@ void		get_map_matrix(t_map *map);
 
 void		get_player_position(t_map *map);
 
-uint32_t	get_color_from_rgb(int r, int g, int b, int a);
+uint32_t    get_rgb_value(int r, int g, int b, int a);
 void		get_color_from_str(t_map *map, char *rgb_str, uint32_t *rgb_array);
 void		set_rgb_color(t_map *map);
+
+char		*skip_spaces(char *str);
+void		set_textures_path(t_map *map);
+int			load_textures_paths(t_map *map);
+int			is_all_textures_ok(t_map *map);
 
 // error
 void		free_and_exit(char **matrix, char *msg);

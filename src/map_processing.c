@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 20:05:03 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/09 19:34:38 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/09 20:25:25 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void    get_player_position(t_map *map)
 
 // 2 - rgb value
 
-uint32_t    get_color_from_rgb(int r, int g, int b, int a)
+uint32_t    get_rgb_value(int r, int g, int b, int a)
 {
     uint32_t    color;
     
@@ -72,11 +72,11 @@ void    get_color_from_str(t_map *map, char *rgb_str, uint32_t *rgb_array)
         return (NULL);
 
     // Converte os valores RGB para inteiros
-    *rgb_array = get_color_from_rgb(ft_atoi(rgb_split[0]), ft_atoi(rgb_split[1]), ft_atoi(rgb_split[2]), 255);
+    *rgb_array = get_rgb_value(ft_atoi(rgb_split[0]), ft_atoi(rgb_split[1]), ft_atoi(rgb_split[2]), 255);
 
     // Libera a memória alocada
-    ft_free_matrix((void **)split);
-    ft_free_matrix((void **)rgb_split);
+    free_matrix((void **)split);
+    free_matrix((void **)rgb_split);
 }
 
 void set_rgb_color(t_map *map)
@@ -85,26 +85,59 @@ void set_rgb_color(t_map *map)
     get_color_from_str(map, map->c_rgb_str, &map->c_rgb_int);
 }
 
-// 2 - get texture paths and file:
+// 3 - get texture paths and file:
 
+char *skip_spaces(char *str)
+{
+    int i;
 
-// verificar se consigo abrir o arquivo
+    i = 0;
+    while(str[i] == 32)
+        i++;
+    return (&str[i]);
+}
+
+void set_textures_path(t_map *map) //colocar as texturas nos indices correto
+{
+    int i;
+    
+    i = 0;
+    while (i < 7)
+    {
+        if (ft_strncmp(map->matrix[i], "NO", 2) == 0)
+            map->text_path[NO] = skip_spaces(map->matrix[i] + 2); // pula os char de direção
+        if (ft_strncmp(map->matrix[i], "SO", 2) == 0)
+            map->text_path[SO] = skip_spaces(map->matrix[i] + 2);
+        if (ft_strncmp(map->matrix[i], "EA", 2) == 0)
+            map->text_path[EA] = skip_spaces(map->matrix[i] + 2);
+        if (ft_strncmp(map->matrix[i], "WE", 2) == 0)
+            map->text_path[WE] = skip_spaces(map->matrix[i] + 2);
+        if (ft_strncmp(map->matrix[i], "F", 1) == 0)
+            map->f_rgb_str = map->matrix[i];
+        if (ft_strncmp(map->matrix[i], "C", 1) == 0)
+            map->c_rgb_str = map->matrix[i];
+        i++;
+    }
+}
 
 int load_textures_paths(t_map *map)
 {
-	map->text_path[NO] = mlx_load_png(map->directions[NO]);
-	map->text_path[SO] = mlx_load_png(map->directions[SO]);
-	map->text_path[EA] = mlx_load_png(map->directions[WE]);
-	map->text_path[WE] = mlx_load_png(map->directions[EA]);
-	if (map->text_path[NO] == NULL || map->text_path[SO] == NULL || map->text_path[WE] == NULL
-		|| map->text_path[EA] == NULL)
+    set_textures_path(map);
+	map->textures[NO] = mlx_load_png(map->text_path[NO]);
+	map->textures[SO] = mlx_load_png(map->text_path[SO]);
+	map->textures[EA] = mlx_load_png(map->text_path[WE]);
+	map->textures[WE] = mlx_load_png(map->text_path[EA]);
+	if (map->textures[NO] == NULL
+        || map->textures[SO] == NULL
+        || map->textures[WE] == NULL
+		|| map->textures[EA] == NULL)
 		return (0);
     return (1);
 }
 int is_all_textures_ok(t_map *map)
 {
     if (load_textures_paths(map) == 0)
-        error("Error\nWrong texture path\n");
+        return (0);
     else
         return (1);
 }
