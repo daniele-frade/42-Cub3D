@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 20:05:03 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/09 20:25:25 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/10 14:02:43 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ uint32_t    get_rgb_value(int r, int g, int b, int a)
     
 }
 
-void    get_color_from_str(t_map *map, char *rgb_str, uint32_t *rgb_array) 
+void    get_color_from_str(char *rgb_str, uint32_t *rgb_array) 
 {
     char **split;
     char **rgb_split;
@@ -64,25 +64,28 @@ void    get_color_from_str(t_map *map, char *rgb_str, uint32_t *rgb_array)
     // Divide a string para separar o identificador e a parte RGB
     split = ft_split(rgb_str, ' ');
     if (split == NULL || split[1] == NULL)
-        return (NULL);
+        return ;
 
     // Divide a parte RGB usando vírgula
     rgb_split = ft_split(split[1], ',');
     if (rgb_split == NULL || rgb_split[0] == NULL || rgb_split[1] == NULL || rgb_split[2] == NULL)
-        return (NULL);
+    {
+        free_matrix(split);
+        return ;
+    }
 
     // Converte os valores RGB para inteiros
     *rgb_array = get_rgb_value(ft_atoi(rgb_split[0]), ft_atoi(rgb_split[1]), ft_atoi(rgb_split[2]), 255);
 
     // Libera a memória alocada
-    free_matrix((void **)split);
-    free_matrix((void **)rgb_split);
+    free_matrix(split);
+    free_matrix(rgb_split);
 }
 
 void set_rgb_color(t_map *map)
 {
-    get_color_from_str(map, map->f_rgb_str, &map->f_rgb_int);
-    get_color_from_str(map, map->c_rgb_str, &map->c_rgb_int);
+    get_color_from_str(map->f_rgb_str, &map->f_rgb_int);
+    get_color_from_str(map->c_rgb_str, &map->c_rgb_int);
 }
 
 // 3 - get texture paths and file:

@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 14:30:37 by dfrade            #+#    #+#             */
-/*   Updated: 2023/09/18 19:31:45 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/10 13:46:56 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static size_t	ft_substr_count(const char *s, int c)
 
 	str_nb = 0;
 	i = 0;
-	while (s[i] != '\0')
+	while (s && s[i] != '\0')
 	{
 		if (s[i] == c)
 		{
@@ -63,7 +63,7 @@ char	**ft_split(char const *s, char c)
 	j = 0;
 	if (!set_str)
 		return (NULL);
-	while (s[i] != '\0')
+	while (s && s[i] != '\0')
 	{
 		if (s[i] == c)
 			i++;

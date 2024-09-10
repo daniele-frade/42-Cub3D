@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/09 20:20:44 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/10 14:03:05 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void		get_map_matrix(t_map *map);
 void		get_player_position(t_map *map);
 
 uint32_t    get_rgb_value(int r, int g, int b, int a);
-void		get_color_from_str(t_map *map, char *rgb_str, uint32_t *rgb_array);
+void		get_color_from_str(char *rgb_str, uint32_t *rgb_array);
 void		set_rgb_color(t_map *map);
 
 char		*skip_spaces(char *str);

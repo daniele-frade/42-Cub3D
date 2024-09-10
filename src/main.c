@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:17:57 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/09 20:25:31 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/10 14:28:20 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@
 int main(int argc, char **argv)
 {
 	t_map				map;
-	mlx_t				*mlx;
+	// mlx_t				*mlx;
 
 	// inicializa struct map
 	ft_bzero(&map, sizeof(t_map));
@@ -118,7 +118,18 @@ int main(int argc, char **argv)
 		error("Error\nWrong texture path\n");
 	
 	// print map_matrix
-	print_matrix(map.map_matrix);
+	ft_printf("\nCompiled successfully\n\n");
+    ft_printf("Map matrix:\n");
+    print_matrix(map.map_matrix);
+    ft_printf("\n");
+    ft_printf("Player position x: %d\n", map.p_position_line);
+    ft_printf("Player position y: %d\n", map.p_position_col);
+    ft_printf("Ceiling RGB value: %u\n", map.c_rgb_int);
+    ft_printf("Floor RGB value: %u\n", map.f_rgb_int);
+    
+    ft_printf("Texture paths:\n");
+	print_matrix(map.text_path);
+	ft_printf("\n");
 	
 	// abrindo a janela
 	// mlx = mlx_init(WINDOW_HEIGHT, WINDOW_WIDTH, "Cub3D", true);
@@ -149,8 +160,7 @@ int main(int argc, char **argv)
 	
 	// parte de free da validação do mapa
 	free_matrix(map.matrix);
-	
-	
+
 	//ft_printf("Compilou\n");
 	return (0);
 }
