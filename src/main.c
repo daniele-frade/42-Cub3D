@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:17:57 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/10 14:28:20 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/12 19:43:15 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int main(int argc, char **argv)
 	get_map_matrix(&map);
 	get_player_position(&map);
 	
-
+	set_textures_path(&map);
 	set_rgb_color(&map);
 	if (is_all_textures_ok(&map) == 0)
 		error("Error\nWrong texture path\n");
@@ -123,9 +123,9 @@ int main(int argc, char **argv)
     print_matrix(map.map_matrix);
     ft_printf("\n");
     ft_printf("Player position x: %d\n", map.p_position_line);
-    ft_printf("Player position y: %d\n", map.p_position_col);
+    ft_printf("Player position y: %d\n\n", map.p_position_col);
     ft_printf("Ceiling RGB value: %u\n", map.c_rgb_int);
-    ft_printf("Floor RGB value: %u\n", map.f_rgb_int);
+    ft_printf("Floor RGB value: %u\n\n", map.f_rgb_int);
     
     ft_printf("Texture paths:\n");
 	print_matrix(map.text_path);
@@ -160,7 +160,10 @@ int main(int argc, char **argv)
 	
 	// parte de free da validação do mapa
 	free_matrix(map.matrix);
+	mlx_delete_texture(map.textures[NO]);
+	mlx_delete_texture(map.textures[SO]);
+	mlx_delete_texture(map.textures[EA]);
+	mlx_delete_texture(map.textures[WE]);
 
-	//ft_printf("Compilou\n");
 	return (0);
 }

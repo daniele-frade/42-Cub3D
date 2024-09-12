@@ -10,7 +10,7 @@ WE ./texture/west.png
 EA ./texture/east.png
 
 
-F 0,0,0
+F 0,0,1
 
 C 255,255,255
 

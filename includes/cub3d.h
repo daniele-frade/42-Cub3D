@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/10 14:03:05 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/12 19:55:16 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_map {
 	char			**map_matrix;
 	int				p_position_line;
 	int				p_position_col;
-	char			*text_path[4]; // caminho do map
+	char			*text_path[5]; // caminho do map
 	char			*f_rgb_str;
 	char			*c_rgb_str;
 	uint32_t		f_rgb_int;
