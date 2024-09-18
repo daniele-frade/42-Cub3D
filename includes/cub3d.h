@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
+/*   By: csilva-m <csilva-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/12 19:55:16 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/18 19:28:27 by csilva-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,15 @@ enum e_directions
 	WE
 };
 
+
+typedef struct s_core {
+	
+	t_map	*map;
+	mlx_image_t* p_image;
+	double p_x;
+	double p_y;
+}	t_core;
+
 typedef struct s_map {
 	char			**matrix;
 	char			*backup_content;
@@ -45,6 +54,7 @@ typedef struct s_map {
 	uint32_t		c_rgb_int;
 	mlx_texture_t	*textures[4]; // para mlx
 }	t_map;
+
 
 typedef struct s_flags
 {
