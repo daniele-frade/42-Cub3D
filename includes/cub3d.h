@@ -6,7 +6,7 @@
 /*   By: csilva-m <csilva-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/21 18:10:35 by csilva-m         ###   ########.fr       */
+/*   Updated: 2024/09/29 18:20:17 by csilva-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+
+
+#define WINDOW_WIDTH 1900
+#define WINDOW_HEIGHT 1000
+#define CUB_SIZE 40
+#define PLAYER_SPEED 5
+#define FOV 60 // Campo de visão
+#define ROTATION_SPEED 0.045
 
 enum				e_directions
 {
@@ -57,15 +65,24 @@ typedef struct s_flags
 	int				f_flag;
 }					t_flags;
 
-typedef struct s_core
+typedef struct s_mlx
 {
-	t_map			*map;
-	mlx_t			*mlx;
-	mlx_image_t		*p_image;
-	mlx_image_t		*m_image;
+	mlx_image_t *image;
+	mlx_t		*mlx_ptr;
+}	t_mlx;
+
+typedef struct s_player
+{
 	double			p_x;
 	double			p_y;
-}					t_core;
+}	t_player;
+
+
+// getters
+t_mlx				*get_mlx(void);
+t_player			*get_player(void);
+t_map				*get_map(void);
+
 
 // map validation
 void				arguments_validation(int argc, char *map_file);
@@ -107,5 +124,9 @@ void				key_data(mlx_key_data_t data, void *map);
 void				print_map2D(t_map *map);
 void				print_square(mlx_image_t *image, int size, int start_line,
 						int start_col, int color);
+
+// debug
+void				print_map(t_map map);
+
 
 #endif

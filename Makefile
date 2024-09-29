@@ -13,6 +13,8 @@ SRCDIR 	 = 	src/
 SRCS	 = 	$(addprefix $(SRCDIR),	map_validation.c \
 									map_processing.c \
 									utils.c \
+									getters.c \
+									debug.c \
 									main.c)
 
 OBJDIR	 =	bin/
