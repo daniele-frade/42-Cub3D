@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/12 19:55:16 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/29 16:37:19 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,10 @@ int			map_is_closed_by_walls(t_map *map);
 
 // map processing
 void		get_map_matrix(t_map *map);
-
 void		get_player_position(t_map *map);
-
 uint32_t    get_rgb_value(int r, int g, int b, int a);
 void		get_color_from_str(char *rgb_str, uint32_t *rgb_array);
 void		set_rgb_color(t_map *map);
-
 char		*skip_spaces(char *str);
 void		set_textures_path(t_map *map);
 int			load_textures_paths(t_map *map);

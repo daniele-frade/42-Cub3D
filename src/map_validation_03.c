@@ -3,24 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation_03.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danielefrade <danielefrade@student.42.f    +#+  +:+       +#+        */
+/*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 13:43:01 by danielefrad       #+#    #+#             */
-/*   Updated: 2024/09/29 13:46:23 by danielefrad      ###   ########.fr       */
+/*   Updated: 2024/09/29 17:38:16 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-
 int	map_has_empty_line(t_map *map)
 {
 	int	i;
-	int counter;
+	int	counter;
 
 	i = 0;
 	counter = 0;
-	while(map->backup_content[i] != '\0')
+	while (map->backup_content[i] != '\0')
 	{
 		while (map->backup_content[i] == '\n')
 			i++;
@@ -49,16 +48,16 @@ int	map_has_empty_line(t_map *map)
 	return (1);
 }
 
-int map_has_only_valid_chars(t_map *map)
+int	map_has_only_valid_chars(t_map *map)
 {
-	int line;
-	int col;
-	
+	int	line;
+	int	col;
+
 	line = 6;
-	while(map->matrix[line] != NULL)
+	while (map->matrix[line] != NULL)
 	{
 		col = 0;
-		while(map->matrix[line][col] != '\0')
+		while (map->matrix[line][col] != '\0')
 		{
 			if (map->matrix[line][col] != '0'
 				&& map->matrix[line][col] != '1'
@@ -114,7 +113,7 @@ int	map_is_closed_by_walls(t_map *map)
 		col = 0;
 		while (map->matrix[line][col] != '\0')
 		{
-			if(map->matrix[line][col] == '0' || ft_strchr("NSWE", map->matrix[line][col]))
+			if (map->matrix[line][col] == '0' || ft_strchr("NSWE", map->matrix[line][col]))
 			{
 				if (map->matrix[line][col + 1] != '\0' && map->matrix[line][col + 1] == ' ')
 					return (0);

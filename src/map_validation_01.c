@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   map_validation_01.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danielefrade <danielefrade@student.42.f    +#+  +:+       +#+        */
+/*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:18:00 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/29 13:45:13 by danielefrad      ###   ########.fr       */
+/*   Updated: 2024/09/29 17:21:15 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void arguments_validation(int argc, char *map_file)
+void	arguments_validation(int argc, char *map_file)
 {
 	if (argc != 2)
 		error("Error\nInvalid arguments\n");
@@ -20,7 +20,7 @@ void arguments_validation(int argc, char *map_file)
 		error("Error\nInvalid map file\n");
 }
 
-void map_validation(t_map *map)
+void	map_validation(t_map *map)
 {
 	if (file_has_all_directions(map) == 0)
 		free_and_exit(map->matrix, "Error\nInvalid map file (wrong directions)\n");
@@ -32,13 +32,13 @@ void map_validation(t_map *map)
 		free_and_exit(map->matrix, "Error\nInvalid map (empty line)\n");
 	if (map_has_only_valid_chars(map) == 0)
 		free_and_exit(map->matrix, "Error\nInvalid map characteres\n");
-	if(map_has_valid_nb_of_players(map) == 0)
+	if (map_has_valid_nb_of_players(map) == 0)
 		free_and_exit(map->matrix, "Error\nInvalid number of player\n");
 	if (map_is_closed_by_walls(map) == 0)
 		free_and_exit(map->matrix, "Error\nMap is not closed by walls\n");
 }
 
-int file_is_cub(char *file_name)
+int	file_is_cub(char *file_name)
 {
 	if (ft_strlen(file_name) < 5)
 		return (0);
@@ -53,14 +53,14 @@ int file_is_cub(char *file_name)
 	return (1);
 }
 
-int check_and_get_file(t_map *map, char *file_name)
+int	check_and_get_file(t_map *map, char *file_name)
 {
-	ssize_t i;
-	int fd;
-	char buffer[5];
-	char *file_content;
-	char *temp;
-	
+	ssize_t	i;
+	int		fd;
+	char	buffer[5];
+	char	*file_content;
+	char	*temp;
+
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
 	{
@@ -69,7 +69,7 @@ int check_and_get_file(t_map *map, char *file_name)
 	}
 	file_content = NULL;
 	i = 1;
-	while(i != 0)
+	while (i != 0)
 	{
 		i = read(fd, buffer, sizeof(buffer) - 1);
 		if (i == -1)

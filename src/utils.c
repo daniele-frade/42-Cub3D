@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 16:14:23 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/01 15:03:29 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/29 17:40:39 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,16 @@ void	free_matrix(char **matrix)
 
 int	error(char *msg)
 {
-	while(*msg)
+	while (*msg)
 		write(1, msg++, 1);
 	exit(1);
 }
 
-void print_matrix(char **matrix)
+void	print_matrix(char **matrix)
 {
-	int i = 0;
+	int	i;
 
-	while(matrix[i])
+	i = 0;
+	while (matrix[i])
 		ft_printf("%s\n", matrix[i++]);
 }
-
-
