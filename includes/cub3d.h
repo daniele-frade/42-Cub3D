@@ -6,7 +6,7 @@
 /*   By: csilva-m <csilva-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/29 18:20:17 by csilva-m         ###   ########.fr       */
+/*   Updated: 2024/10/01 18:09:45 by csilva-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 #define PLAYER_SPEED 5
 #define FOV 60 // Campo de visão
 #define ROTATION_SPEED 0.045
+#define PI 3.14
 
 enum				e_directions
 {
@@ -73,8 +74,13 @@ typedef struct s_mlx
 
 typedef struct s_player
 {
-	double			p_x;
-	double			p_y;
+	int			p_x;
+	int			p_y;
+	double		angle;
+	float		fov_rd;
+	int			rot;
+	int			l_r;
+	int			u_d;
 }	t_player;
 
 
