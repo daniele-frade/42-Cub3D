@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
+/*   By: danielefrade <danielefrade@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/29 16:37:19 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/10/05 12:10:02 by danielefrad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,20 @@ typedef struct s_flags
 
 // map validation
 void		arguments_validation(int argc, char *map_file);
-void		map_validation(t_map *map);
 int			file_is_cub(char *file_name);
+int			open_file(char *file_name);
+char		*read_file_content(int fd);
 int			check_and_get_file(t_map *map, char *file_name);
+void		data_validation(t_map *map);
+int			set_direction_flag(t_flags *flag, char *line, char *direction, int *flag_val);
+int			check_line_direction(char *line, t_flags *flag);
+int			all_directions_set(t_flags *flag);
 int			file_has_all_directions(t_map *map);
 int			directions_has_all_paths(t_map *map);
 int			file_has_valid_rgb(t_map *map);
+int			file_has_valid_rgb(t_map *map);
+int			validate_commas(char *rgb, int *i);
+int			validate_digits(char *rgb, int *i);
 int			rgb_has_valid_sintax(char *rgb);
 int			rgb_has_valid_value(char *rgb);
 int			map_has_empty_line(t_map *map);

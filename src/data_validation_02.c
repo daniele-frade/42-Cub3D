@@ -1,67 +1,61 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_validation_02.c                                :+:      :+:    :+:   */
+/*   data_validation_02.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
+/*   By: danielefrade <danielefrade@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 13:40:10 by danielefrad       #+#    #+#             */
-/*   Updated: 2024/09/29 17:30:55 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/10/05 12:08:47 by danielefrad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+int	set_direction_flag(t_flags *flag, char *line, char *direction, int *flag_val)
+{
+	if (ft_strncmp(line, direction, ft_strlen(direction)) == 0)
+	{
+		if (*flag_val == 1)
+			return (0);
+		*flag_val = 1;
+	}
+	return (1);
+}
+
+int	check_line_direction(char *line, t_flags *flag)
+{
+	if (!set_direction_flag(flag, line, "NO ", &flag->no_flag) ||
+		!set_direction_flag(flag, line, "SO ", &flag->so_flag) ||
+		!set_direction_flag(flag, line, "EA ", &flag->ea_flag) ||
+		!set_direction_flag(flag, line, "WE ", &flag->we_flag) ||
+		!set_direction_flag(flag, line, "C ", &flag->c_flag) ||
+		!set_direction_flag(flag, line, "F ", &flag->f_flag))
+	{
+		return (0);
+	}
+	return (1);
+}
+
+int	all_directions_set(t_flags *flag)
+{
+	return (flag->no_flag == 1 && flag->so_flag == 1 &&
+			flag->ea_flag == 1 && flag->we_flag == 1 &&
+			flag->c_flag == 1 && flag->f_flag == 1);
+}
+
 int	file_has_all_directions(t_map *map)
 {
 	int		line;
-	char	**str;
 	t_flags	flag;
 
 	ft_bzero(&flag, sizeof(t_flags));
-	str = map->matrix;
 	line = 0;
-	while (str[line] != NULL)
+	while (map->matrix[line] != NULL)
 	{
-		if (ft_strncmp(str[line], "NO ", 3) == 0)
-		{
-			if (flag.no_flag == 1)
-				return (0);
-			flag.no_flag = 1;
-		}
-		else if (ft_strncmp(str[line], "SO ", 3) == 0)
-		{
-			if (flag.so_flag == 1)
-				return (0);
-			flag.so_flag = 1;
-		}
-		else if (ft_strncmp(str[line], "EA ", 3) == 0)
-		{
-			if (flag.ea_flag == 1)
-				return (0);
-			flag.ea_flag = 1;
-		}
-		else if (ft_strncmp(str[line], "WE ", 3) == 0)
-		{
-			if (flag.we_flag == 1)
-				return (0);
-			flag.we_flag = 1;
-		}
-		else if (ft_strncmp(str[line], "C ", 2) == 0)
-		{
-			if (flag.c_flag == 1)
-				return (0);
-			flag.c_flag = 1;
-		}
-		else if (ft_strncmp(str[line], "F ", 2) == 0)
-		{
-			if (flag.f_flag == 1)
-				return (0);
-			flag.f_flag = 1;
-		}
-		else
+		if (!check_line_direction(map->matrix[line], &flag))
 			return (0);
-		if (flag.no_flag == 1 && flag.so_flag == 1 && flag.ea_flag == 1 && flag.we_flag == 1 && flag.c_flag == 1 && flag.f_flag == 1)
+		if (all_directions_set(&flag))
 			return (1);
 		line++;
 	}
@@ -119,44 +113,61 @@ int	file_has_valid_rgb(t_map *map)
 	return (1);
 }
 
-int	rgb_has_valid_sintax(char *rgb)
+int	validate_commas(char *rgb, int *i)
 {
-	int		i;
-	int		j;
-	int		comma;
-	int		digit;
+	int comma = 0;
 
-	i = 1;
-	comma = 0;
-	digit = 0;
-	while (rgb[i] && rgb[i] == ' ')
-		i++;
-	if (rgb[i] == '\0')
-		return (0);
-	j = i;
-	while (rgb[i] != '\0')
+	while (rgb[*i] != '\0')
 	{
-		if (rgb[i] == ',')
+		if (rgb[*i] == ',')
 		{
-			digit = 0;
 			comma++;
 			if (comma > 2)
 				return (0);
-			i++;
+			*i += 1;
 		}
-		if (ft_isdigit(rgb[i]) == 0)
+		*i += 1;
+	}
+	return (comma == 2);
+}
+
+int	validate_digits(char *rgb, int *i)
+{
+	int digit = 0;
+
+	while (rgb[*i] != '\0' && rgb[*i] != ',')
+	{
+		if (!ft_isdigit(rgb[*i]))
 			return (0);
 		digit++;
 		if (digit > 3)
 			return (0);
-		i++;
+		*i += 1;
 	}
-	if (comma < 2)
-		return (0);
-	if (rgb_has_valid_value(&rgb[j]))
-		return (1);
-	return (0);
+	return (digit > 0 && digit <= 3);
 }
+
+int	rgb_has_valid_sintax(char *rgb)
+{
+	int	i = 1;
+
+	while (rgb[i] && rgb[i] == ' ')
+		i++;
+	if (rgb[i] == '\0')
+		return (0);
+	if (!validate_commas(rgb, &i))
+		return (0);
+	i = 1;
+	while (rgb[i] != '\0')
+	{
+		if (!validate_digits(rgb, &i))
+			return (0);
+		if (rgb[i] == ',')
+			i++;
+	}
+	return (rgb_has_valid_value(&rgb[1]));
+}
+
 
 int	rgb_has_valid_value(char *rgb)
 {
