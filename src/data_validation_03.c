@@ -1,50 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_validation_03.c                                :+:      :+:    :+:   */
+/*   data_validation_03.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/29 13:43:01 by danielefrad       #+#    #+#             */
-/*   Updated: 2024/09/29 17:38:16 by dfrade           ###   ########.fr       */
+/*   Created: 2024/10/05 14:18:25 by dfrade            #+#    #+#             */
+/*   Updated: 2024/10/05 14:27:07 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	map_has_empty_line(t_map *map)
+int	directions_has_all_paths(t_map *map)
 {
-	int	i;
-	int	counter;
+	char	**str;
+	int		line;
+	int		col;
+	int		flag;
 
-	i = 0;
-	counter = 0;
-	while (map->backup_content[i] != '\0')
+	str = map->matrix;
+	line = 5;
+	flag = 0;
+	while (line >= 0)
 	{
-		while (map->backup_content[i] == '\n')
-			i++;
-		counter++;
-		while (map->backup_content[i] != '\n')
-			i++;
-		if (counter == 6)
-			break ;
-	}
-	while (map->backup_content[i] == '\n')
-		i++;
-	while (map->backup_content[i] != '\0')
-	{
-		if (map->backup_content[i] == '\n' && map->backup_content[i + 1] == '\n')
-		{
-			while (map->backup_content[i] == '\n')
-				i++;
-			if (map->backup_content[i] != '\0')
-				return (0);
-		}
+		col = 3;
+		while (str[line][col] != '\0' && str[line][col] == ' ')
+			col++;
+		if (str[line][col] != '\0')
+			flag = 1;
 		else
-			i++;
+			flag = 0;
+		if (flag == 0)
+			return (0);
+		line--;
 	}
-	free(map->backup_content);
-	map->backup_content = NULL;
 	return (1);
 }
 
@@ -99,41 +89,5 @@ int	map_has_valid_nb_of_players(t_map *map)
 	}
 	if (player_count == 0)
 		return (0);
-	return (1);
-}
-
-int	map_is_closed_by_walls(t_map *map)
-{
-	int	line;
-	int	col;
-
-	line = 6;
-	while (map->matrix[line] != NULL)
-	{
-		col = 0;
-		while (map->matrix[line][col] != '\0')
-		{
-			if (map->matrix[line][col] == '0' || ft_strchr("NSWE", map->matrix[line][col]))
-			{
-				if (map->matrix[line][col + 1] != '\0' && map->matrix[line][col + 1] == ' ')
-					return (0);
-				if (col != 0 && map->matrix[line][col - 1] == ' ')
-					return (0);
-				if (map->matrix[line + 1] != NULL && ft_strlen(map->matrix[line + 1]) > (size_t)col && map->matrix[line + 1][col] == ' ')
-					return (0);
-				if (line != 6 && ft_strlen(map->matrix[line - 1]) > (size_t)col && map->matrix[line - 1][col] == ' ')
-					return (0);
-				if (map->matrix[line][col + 1] == '\0'
-					|| col == 0
-					|| map->matrix[line + 1] == NULL
-					|| ft_strlen(map->matrix[line + 1]) <= (size_t)col
-					|| line == 6
-					|| ft_strlen(map->matrix[line - 1]) <= (size_t)col)
-					return (0);
-			}
-			col++;
-		}
-		line++;
-	}
 	return (1);
 }

@@ -6,15 +6,16 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 16:14:23 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/29 17:40:39 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/10/05 16:41:09 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	free_and_exit(char **matrix, char *msg)
+void	free_and_exit(t_map *map, char *msg)
 {
-	free_matrix(matrix);
+	free_matrix(map->matrix);
+	free(map->backup_content);
 	error(msg);
 }
 

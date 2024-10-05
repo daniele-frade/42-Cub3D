@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:17:57 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/29 17:25:49 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/10/05 16:50:04 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,24 @@ int	main(int argc, char **argv)
 	ft_bzero(&map, sizeof(t_map));
 	arguments_validation(argc, argv[1]);
 	check_and_get_file(&map, argv[1]);
-	map_validation(&map);
+	data_validation(&map);
 	get_map_matrix(&map);
 	get_player_position(&map);
 	set_textures_path(&map);
 	set_rgb_color(&map);
 	if (is_all_textures_ok(&map) == 0)
+	{
+		free_matrix(map.matrix);
+		if (map.textures[NO] != NULL)
+			mlx_delete_texture(map.textures[NO]);
+		if (map.textures[SO] != NULL)
+			mlx_delete_texture(map.textures[SO]);
+		if (map.textures[EA] != NULL)
+			mlx_delete_texture(map.textures[EA]);
+		if (map.textures[WE] != NULL)
+			mlx_delete_texture(map.textures[WE]);
 		error("Error\nWrong texture path\n");
+	}
 	ft_printf("\nCompiled successfully\n\n");
 	ft_printf("Map matrix:\n");
 	print_matrix(map.map_matrix);
@@ -51,3 +62,5 @@ int	main(int argc, char **argv)
 
 	return (0);
 }
+// rodar com valgrind:
+// valgrind --suppressions=codam.sup --leak-check=full --show-leak-kinds=all ./cub3D maps/info/4.0-mixed_infos_OKAY.cub

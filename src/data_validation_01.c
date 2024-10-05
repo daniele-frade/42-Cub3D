@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_validation_01.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danielefrade <danielefrade@student.42.f    +#+  +:+       +#+        */
+/*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:18:00 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/05 11:46:31 by danielefrad      ###   ########.fr       */
+/*   Updated: 2024/10/05 15:31:50 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	file_is_cub(char *file_name)
 
 int	open_file(char *file_name)
 {
-	int fd;
+	int	fd;
 
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
@@ -50,10 +50,10 @@ int	open_file(char *file_name)
 
 char	*read_file_content(int fd)
 {
-	ssize_t i;
-	char buffer[5];
-	char *file_content;
-	char *temp;
+	ssize_t	i;
+	char	buffer[5];
+	char	*file_content;
+	char	*temp;
 
 	file_content = NULL;
 	i = 1;
@@ -77,6 +77,8 @@ int	check_and_get_file(t_map *map, char *file_name)
 {
 	int		fd;
 	char	*file_content;
+	char	*old_line;
+	int		i;
 
 	fd = open_file(file_name);
 	file_content = read_file_content(fd);
@@ -89,23 +91,13 @@ int	check_and_get_file(t_map *map, char *file_name)
 		free(file_content);
 		exit(1);
 	}
+	i = 0;
+	while (i < 6 && map->matrix[i] != NULL)
+	{
+		old_line = map->matrix[i];
+		map->matrix[i] = ft_strtrim(map->matrix[i], " \t");
+		free(old_line);
+		i++;
+	}
 	return (1);
-}
-
-void	data_validation(t_map *map)
-{
-	if (file_has_all_directions(map) == 0)
-		free_and_exit(map->matrix, "Error\nInvalid map file (wrong directions)\n");
-	if (directions_has_all_paths(map) == 0)
-		free_and_exit(map->matrix, "Error\nInvalid map file (wrong paths)\n");
-	if (file_has_valid_rgb(map) == 0)
-		free_and_exit(map->matrix, "Error\nInvalid map file (wrong rgb)\n");
-	if (map_has_empty_line(map) == 0)
-		free_and_exit(map->matrix, "Error\nInvalid map (empty line)\n");
-	if (map_has_only_valid_chars(map) == 0)
-		free_and_exit(map->matrix, "Error\nInvalid map characteres\n");
-	if (map_has_valid_nb_of_players(map) == 0)
-		free_and_exit(map->matrix, "Error\nInvalid number of player\n");
-	if (map_is_closed_by_walls(map) == 0)
-		free_and_exit(map->matrix, "Error\nMap is not closed by walls\n");
 }

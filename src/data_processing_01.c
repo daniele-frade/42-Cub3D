@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_processing_01.c                                :+:      :+:    :+:   */
+/*   data_processing_01.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 20:05:03 by dfrade            #+#    #+#             */
-/*   Updated: 2024/09/29 17:15:36 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/10/05 14:23:13 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	get_color_from_str(char *rgb_str, uint32_t *rgb_array)
 		free_matrix(split);
 		return ;
 	}
-	*rgb_array = get_rgb_value(ft_atoi(rgb_split[0]), ft_atoi(rgb_split[1]), ft_atoi(rgb_split[2]), 255);
+	*rgb_array = get_rgb_value(ft_atoi(rgb_split[0]), \
+		ft_atoi(rgb_split[1]), ft_atoi(rgb_split[2]), 255);
 	free_matrix(split);
 	free_matrix(rgb_split);
 }
