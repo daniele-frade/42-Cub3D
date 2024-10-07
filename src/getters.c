@@ -33,3 +33,11 @@ t_map	*get_map(void)
 
 	return (&core);
 }
+
+t_ray	*get_ray(void)
+{
+	static t_ray	core;
+
+	return (&core);
+}
+

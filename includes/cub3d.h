@@ -83,11 +83,19 @@ typedef struct s_player
 	int			u_d;
 }	t_player;
 
+typedef struct s_ray //the ray structure
+{
+	double ray_ngl;
+	double distance;
+	int  flag;
+} t_ray;
 
 // getters
 t_mlx				*get_mlx(void);
 t_player			*get_player(void);
 t_map				*get_map(void);
+t_ray				*get_ray(void);
+
 
 
 // map validation
