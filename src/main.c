@@ -12,30 +12,6 @@
 
 #include "../includes/cub3d.h"
 
-
-void	fill_top_bottom(t_mlx *mlx, int color_top, int color_bottom)
-{
-	uint32_t	x;
-	uint32_t	y;
-	uint32_t	half_height;
-
-	half_height = mlx->image->height / 2;
-	y = 0;
-	while (y < mlx->image->height)
-	{
-		x = 0;
-		while (x < mlx->image->width)
-		{
-			if (y < half_height)
-				mlx_put_pixel(mlx->image, x, y, color_top);
-			else
-				mlx_put_pixel(mlx->image, x, y, color_bottom);
-			x++;
-		}
-		y++;
-	}
-}
-
 void	init_player(void)
 {
 	t_player *player;
@@ -43,22 +19,47 @@ void	init_player(void)
 
 	player->p_x = get_map()->p_position_col * CUB_SIZE + CUB_SIZE / 2;
 	player->p_y = get_map()->p_position_line * CUB_SIZE + CUB_SIZE / 2;
-	player->fov_rd = (FOV * PI) / 180; // calculo de campo de visão em radiandos
-	player->angle = PI;
+	player->fov_rd = (FOV * M_PI) / 180; // calculo de campo de visão em radiandos
+	player->angle = M_PI;
 
+}
+
+
+int	inter_check_h(float angle, float *inter, float *step)
+{
+	if (angle > 0 && angle < M_PI)
+	{
+		*inter += CUB_SIZE;
+		return (-1);
+	}
+	*step *= -1;
+	return (1);
+}
+
+
+
+int	inter_check_v(float angle, float *inter, float *step)
+{
+	if (!(angle > M_PI / 2 && angle < 3 * M_PI / 2)) 
+	{
+		*inter += CUB_SIZE;
+		return (-1);
+	}
+	*step *= -1;
+	return (1);
 }
 
 int unit_circle(float angle, char c)
 {
 	if (c == 'x')
 	{
-		if (angle > 0 && angle < PI)
-		return (1);
+		if (angle > 0 && angle < M_PI)
+			return (1);
 	}
 	else if (c == 'y')
 	{
-		if (angle > (PI / 2) && angle < (3 * PI) / 2)
-		return (1);
+		if (angle > (M_PI / 2) && angle < (3 * M_PI) / 2)
+			return (1);
 	}
 	return (0);
 }
@@ -99,29 +100,114 @@ float	get_h_inter(float angl)
 	y_step = CUB_SIZE;
 	x_step = CUB_SIZE / tan(angl);
 	h_y = floor(get_player()->p_y / CUB_SIZE) * CUB_SIZE;
-	
-	return(1);
+	pixel = inter_check_h(angl, &h_y, &y_step);
+	h_x = get_player()->p_x + (h_y - get_player()->p_y) / tan(angl);
+	if ((unit_circle(angl, 'y') && x_step > 0) || (!unit_circle(angl, 'y') && x_step < 0))
+		x_step *= -1;
+	while(wall_hit(h_x, h_y - pixel))
+	{
+		h_x += x_step;
+		h_y += y_step;
+	}
+	return(sqrt(pow(h_x - get_player()->p_x, 2) + pow(h_y - get_player()->p_y, 2)));
 }
 
 
-// float	get_v_inter(float angl)
-// {
+float	get_v_inter(float angl)
+{
+	float v_x;
+	float v_y;
+	float x_step;
+	float y_step;
+	int  pixel;
 
-	
-// }
+	x_step = CUB_SIZE;
+	y_step = CUB_SIZE * tan(angl);
+	v_x = floor(get_player()->p_x / CUB_SIZE) * CUB_SIZE;
+	pixel = inter_check_v(angl, &v_x, &x_step);
+	v_y = get_player()->p_y + (v_x - get_player()->p_x) * tan(angl);
+	if ((unit_circle(angl, 'x') && y_step < 0) || (!unit_circle(angl, 'x') && y_step > 0))
+		y_step *= -1;
+	while(wall_hit(v_x - pixel, v_y))
+	{
+		v_x += x_step;
+		v_y += y_step;
+	}
+	return(sqrt(pow(v_x - get_player()->p_x, 2) + pow(v_y - get_player()->p_y, 2)));
+}
+
+int get_color(int flag) // get the color of the wall
+{
+	get_ray()->ray_ngl = nor_angle(get_ray()->ray_ngl); // normalize the angle
+	if (flag == 0)
+	{
+		if (get_ray()->ray_ngl > M_PI / 2 && get_ray()->ray_ngl < 3 * (M_PI / 2))
+			return (0xB5B5B5FF); // west wall
+		else
+			return (0xB5B5B5FF); // east wall
+	}
+	else
+	{
+		if (get_ray()->ray_ngl > 0 && get_ray()->ray_ngl < M_PI)
+			return (0xF5F5F5FF); // south wall
+		else
+			return (0xF5F5F5FF); // north wall
+	}
+}
+
+void	draw_wall(int ray, int top, int bot)
+{
+	int color;
+	color = get_color(get_ray()->flag);
+	while(top < bot)
+		my_mlx_pixel_put(get_mlx(), ray, top++, color);
+}
+
+void render_wall(int ray)
+{
+	double bot_pixel;
+	double top_pixel;
+	double wall_height;
+	get_ray()->distance *= cos(nor_angle(get_ray()->ray_ngl - get_player()->angle));
+	wall_height = (CUB_SIZE / get_ray()->distance) * ((WINDOW_WIDTH / 2) / tan(get_player()->fov_rd / 2));
+	bot_pixel = (WINDOW_HEIGHT / 2) + (wall_height / 2);
+	top_pixel = (WINDOW_HEIGHT / 2) - (wall_height / 2);
+	if(bot_pixel > WINDOW_HEIGHT)
+		bot_pixel = WINDOW_HEIGHT;
+	if(top_pixel < 0)
+		top_pixel = 0;
+	draw_wall(ray, top_pixel, bot_pixel);
+	// uint32_t  ceil = get_map()->c_rgb_int;
+	// uint32_t  floor = get_map()->f_rgb_int;
+	// fill_top_bottom(get_mlx() , ceil, floor);
+
+}
+
 
 void raycaster(void)
 {
-	double v_inter;
+	double v_inter;	
 	double h_inter;
 	int		ray;
 	ray = 0;
-	get_ray()->ray_ngl = get_player()->angle - (get_player()->fov_rd / 2);
+	get_ray()->ray_ngl = get_player()->angle - (get_player()->fov_rd / 2); // primeiro angulo
 	while (ray < WINDOW_WIDTH)
 	{
-		get_ray()->flag = 0
+		get_ray()->flag = 0;
+		h_inter = get_h_inter(nor_angle(get_ray()->ray_ngl));
+		v_inter = get_v_inter(nor_angle(get_ray()->ray_ngl));
+		if(v_inter <= h_inter)
+			get_ray()->distance = v_inter;
+		else
+		{
+			get_ray()->distance = h_inter;
+			get_ray()->flag = 1;
+		}
+		printf("raynb = %d ", ray);
+		printf("distance %f\n", get_ray()->distance);
+		render_wall(ray);
 		ray++;
-		get_ray()->ray_ngl += (get_player()->fov_rd / WINDOW_WIDTH);
+		get_ray()->ray_ngl += (get_player()->fov_rd / WINDOW_WIDTH); // acrescenta o angulo
 	}
 	
 }
@@ -131,16 +217,14 @@ void game_loop(void *param)
 {
 	(void)param;
 	t_mlx *mlx = get_mlx();
-	t_map *map;
-	map = get_map();
+	// t_map *map;
+	// map = get_map();
 	mlx_delete_image(mlx->mlx_ptr, mlx->image);
 	mlx->image = mlx_new_image(mlx->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
 	mlx_image_to_window(mlx->mlx_ptr, mlx->image, 0, 0);
 	raycaster();
 	// Isso vai sair daqui no futuro
-	uint32_t  ceil = map->c_rgb_int;
-	uint32_t  floor = map->f_rgb_int;
-	fill_top_bottom(mlx, ceil, floor);
+
 }
 
 void	init(void)

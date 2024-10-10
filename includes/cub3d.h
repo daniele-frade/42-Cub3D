@@ -31,7 +31,6 @@
 #define PLAYER_SPEED 5
 #define FOV 60 // Campo de visão
 #define ROTATION_SPEED 0.045
-#define PI 3.14
 
 enum				e_directions
 {
@@ -141,6 +140,11 @@ void				print_square(mlx_image_t *image, int size, int start_line,
 
 // debug
 void				print_map(t_map map);
+
+// process map
+void				fill_top_bottom(t_mlx *mlx, int color_top, int color_bottom);
+void				my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
+
 
 
 #endif

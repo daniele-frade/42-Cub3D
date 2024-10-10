@@ -15,7 +15,8 @@ SRCS	 = 	$(addprefix $(SRCDIR),	map_validation.c \
 									utils.c \
 									getters.c \
 									debug.c \
-									main.c)
+									main.c\
+									render.c)
 
 OBJDIR	 =	bin/
 OBJS	 =	$(patsubst $(SRCDIR)%.c,$(OBJDIR)%.o,$(SRCS))
