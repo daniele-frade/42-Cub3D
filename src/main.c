@@ -20,32 +20,30 @@ void	init_player(void)
 	player->p_x = get_map()->p_position_col * CUB_SIZE + CUB_SIZE / 2;
 	player->p_y = get_map()->p_position_line * CUB_SIZE + CUB_SIZE / 2;
 	player->fov_rd = (FOV * M_PI) / 180; // calculo de campo de visão em radiandos
-	player->angle = M_PI;
+	player->angle = (3 * M_PI) / 2;
 
 }
 
-
-int	inter_check_h(float angle, float *inter, float *step)
+int	inter_check(float angle, float *inter, float *step, int is_horizon)
 {
-	if (angle > 0 && angle < M_PI)
+	if (is_horizon)
 	{
-		*inter += CUB_SIZE;
-		return (-1);
+		if (angle > 0 && angle < M_PI)
+		{
+			*inter += CUB_SIZE;
+			return (-1);
+		}
+		*step *= -1;
 	}
-	*step *= -1;
-	return (1);
-}
-
-
-
-int	inter_check_v(float angle, float *inter, float *step)
-{
-	if (!(angle > M_PI / 2 && angle < 3 * M_PI / 2)) 
+	else
 	{
-		*inter += CUB_SIZE;
-		return (-1);
+		if (!(angle > M_PI / 2 && angle < 3 * M_PI / 2))
+		{
+			*inter += CUB_SIZE;
+			return (-1);
+		}
+		*step *= -1;
 	}
-	*step *= -1;
 	return (1);
 }
 
@@ -83,6 +81,8 @@ int	wall_hit(float x, float y)
 		return(0);
 	x_pos = floor(x / CUB_SIZE);
 	y_pos = floor(y / CUB_SIZE);
+	if ((y_pos >= 8|| x_pos >= 27))
+		return (0);
 	if(get_map()->map_matrix[y_pos] && x_pos <= (int)ft_strlen(get_map()->map_matrix[y_pos]))
 		if(get_map()->map_matrix[y_pos][x_pos] == '1')
 			return(0);
@@ -100,7 +100,7 @@ float	get_h_inter(float angl)
 	y_step = CUB_SIZE;
 	x_step = CUB_SIZE / tan(angl);
 	h_y = floor(get_player()->p_y / CUB_SIZE) * CUB_SIZE;
-	pixel = inter_check_h(angl, &h_y, &y_step);
+	pixel = inter_check(angl, &h_y, &y_step, 1);
 	h_x = get_player()->p_x + (h_y - get_player()->p_y) / tan(angl);
 	if ((unit_circle(angl, 'y') && x_step > 0) || (!unit_circle(angl, 'y') && x_step < 0))
 		x_step *= -1;
@@ -124,7 +124,7 @@ float	get_v_inter(float angl)
 	x_step = CUB_SIZE;
 	y_step = CUB_SIZE * tan(angl);
 	v_x = floor(get_player()->p_x / CUB_SIZE) * CUB_SIZE;
-	pixel = inter_check_v(angl, &v_x, &x_step);
+	pixel = inter_check(angl, &v_x, &x_step, 0);
 	v_y = get_player()->p_y + (v_x - get_player()->p_x) * tan(angl);
 	if ((unit_circle(angl, 'x') && y_step < 0) || (!unit_circle(angl, 'x') && y_step > 0))
 		y_step *= -1;
@@ -176,6 +176,7 @@ void render_wall(int ray)
 		bot_pixel = WINDOW_HEIGHT;
 	if(top_pixel < 0)
 		top_pixel = 0;
+	// printf("Ray: %d, Top: %f, Bot: %f, Wall Height: %f, Distance: %f\n", ray, top_pixel, bot_pixel, wall_height, get_ray()->distance);
 	draw_wall(ray, top_pixel, bot_pixel);
 	// uint32_t  ceil = get_map()->c_rgb_int;
 	// uint32_t  floor = get_map()->f_rgb_int;
@@ -191,7 +192,7 @@ void raycaster(void)
 	int		ray;
 	ray = 0;
 	get_ray()->ray_ngl = get_player()->angle - (get_player()->fov_rd / 2); // primeiro angulo
-	while (ray < WINDOW_WIDTH)
+	while (ray <= WINDOW_WIDTH)
 	{
 		get_ray()->flag = 0;
 		h_inter = get_h_inter(nor_angle(get_ray()->ray_ngl));
@@ -206,8 +207,8 @@ void raycaster(void)
 		printf("raynb = %d ", ray);
 		printf("distance %f\n", get_ray()->distance);
 		render_wall(ray);
-		ray++;
 		get_ray()->ray_ngl += (get_player()->fov_rd / WINDOW_WIDTH); // acrescenta o angulo
+		ray++;
 	}
 	
 }

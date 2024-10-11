@@ -27,10 +27,15 @@
 
 #define WINDOW_WIDTH 1900
 #define WINDOW_HEIGHT 1000
-#define CUB_SIZE 40
+#define CUB_SIZE 30
 #define PLAYER_SPEED 5
 #define FOV 60 // Campo de visão
 #define ROTATION_SPEED 0.045
+
+// Math
+# define TWO_PI 6.28318530717958647692
+# define PI_OVER_TWO 1.57079632679489661923
+# define THREE_PI_OVER_TWO 4.71238898038468985769
 
 enum				e_directions
 {
