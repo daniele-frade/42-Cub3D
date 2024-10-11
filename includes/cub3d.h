@@ -6,7 +6,7 @@
 /*   By: csilva-m <csilva-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/01 18:09:45 by csilva-m         ###   ########.fr       */
+/*   Updated: 2024/10/11 18:07:04 by csilva-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,6 @@
 #define FOV 60 // Campo de visão
 #define ROTATION_SPEED 0.045
 
-// Math
-# define TWO_PI 6.28318530717958647692
-# define PI_OVER_TWO 1.57079632679489661923
-# define THREE_PI_OVER_TWO 4.71238898038468985769
 
 enum				e_directions
 {
@@ -73,6 +69,7 @@ typedef struct s_flags
 typedef struct s_mlx
 {
 	mlx_image_t *image;
+	mlx_image_t *image_map;
 	mlx_t		*mlx_ptr;
 }	t_mlx;
 
@@ -148,7 +145,7 @@ void				print_map(t_map map);
 
 // process map
 void				fill_top_bottom(t_mlx *mlx, int color_top, int color_bottom);
-void				my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
+void				my_mlx_pixel_put(mlx_image_t *image, int x, int y, int color);
 
 
 

@@ -6,21 +6,33 @@
 /*   By: csilva-m <csilva-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:17:57 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/01 18:43:27 by csilva-m         ###   ########.fr       */
+/*   Updated: 2024/10/11 18:06:27 by csilva-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+void	jorge(void)
+{
+	printf("aqui\n");
+}
+
 void	init_player(void)
 {
 	t_player *player;
 	player = get_player();
-
+	
 	player->p_x = get_map()->p_position_col * CUB_SIZE + CUB_SIZE / 2;
 	player->p_y = get_map()->p_position_line * CUB_SIZE + CUB_SIZE / 2;
-	player->fov_rd = (FOV * M_PI) / 180; // calculo de campo de visão em radiandos
-	player->angle = (3 * M_PI) / 2;
+	player->fov_rd = 0.0174533; // calculo de campo de visão em radiandos
+	if(get_map()->map_matrix[get_map()->p_position_line][get_map()->p_position_col] == 'W')
+		player->angle = M_PI;
+	else if(get_map()->map_matrix[get_map()->p_position_line][get_map()->p_position_col]  == 'E')
+		player->angle = M_PI * 2;
+	else if(get_map()->map_matrix[get_map()->p_position_line][get_map()->p_position_col]  == 'S')
+		player->angle = M_PI / 2;
+	else if(get_map()->map_matrix[get_map()->p_position_line][get_map()->p_position_col]  == 'N')
+		player->angle = (3 * M_PI) / 2;
 
 }
 
@@ -160,7 +172,7 @@ void	draw_wall(int ray, int top, int bot)
 	int color;
 	color = get_color(get_ray()->flag);
 	while(top < bot)
-		my_mlx_pixel_put(get_mlx(), ray, top++, color);
+		my_mlx_pixel_put(get_mlx()->image, ray, top++, color);
 }
 
 void render_wall(int ray)
@@ -192,7 +204,7 @@ void raycaster(void)
 	int		ray;
 	ray = 0;
 	get_ray()->ray_ngl = get_player()->angle - (get_player()->fov_rd / 2); // primeiro angulo
-	while (ray <= WINDOW_WIDTH)
+	while (ray <= WINDOW_WIDTH * 2)
 	{
 		get_ray()->flag = 0;
 		h_inter = get_h_inter(nor_angle(get_ray()->ray_ngl));
@@ -204,8 +216,6 @@ void raycaster(void)
 			get_ray()->distance = h_inter;
 			get_ray()->flag = 1;
 		}
-		printf("raynb = %d ", ray);
-		printf("distance %f\n", get_ray()->distance);
 		render_wall(ray);
 		get_ray()->ray_ngl += (get_player()->fov_rd / WINDOW_WIDTH); // acrescenta o angulo
 		ray++;
@@ -213,6 +223,47 @@ void raycaster(void)
 	
 }
 
+void draw_square(uint32_t color, int x, int y)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < CUB_SIZE)
+	{
+		j = 0;
+		while (j < CUB_SIZE)
+		{
+			my_mlx_pixel_put(get_mlx()->image_map, x + i, y + j, color);
+			++j;
+		}
+		++i;
+	}
+}
+
+void minimap(void)
+{
+	char **map_p = get_map()->map_matrix;
+
+	int x = 0;
+	int y = 0;
+	while(map_p[y])
+	{
+		x = 0;
+		jorge();
+
+		while(map_p[y][x])
+		{
+			if(map_p[y][x] == '1')
+				draw_square(0x00FF00FF, x * CUB_SIZE, y * CUB_SIZE);
+			else
+				draw_square(0x000000FF, x * CUB_SIZE, y * CUB_SIZE);
+			++x;
+		}
+		++y;
+	}
+
+}
 
 void game_loop(void *param)
 {
@@ -223,8 +274,11 @@ void game_loop(void *param)
 	mlx_delete_image(mlx->mlx_ptr, mlx->image);
 	mlx->image = mlx_new_image(mlx->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
 	mlx_image_to_window(mlx->mlx_ptr, mlx->image, 0, 0);
+	mlx->image_map = mlx_new_image(mlx->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	mlx_image_to_window(mlx->mlx_ptr, mlx->image_map, 0, 0);
+	mlx->image->instances[0].z = -1;
 	raycaster();
-	// Isso vai sair daqui no futuro
+	minimap();
 
 }
 

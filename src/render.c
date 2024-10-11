@@ -23,7 +23,7 @@ void	fill_top_bottom(t_mlx *mlx, int color_top, int color_bottom)
 	}
 }
 
-void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
+void	my_mlx_pixel_put(mlx_image_t *image, int x, int y, int color)
 {
 	if (x < 0)
 		return ;
@@ -33,5 +33,5 @@ void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
 		return ;
 	else if (y >= WINDOW_HEIGHT)
 		return ;
-	mlx_put_pixel(mlx->image, x, y, color);
+	mlx_put_pixel(image, x, y, color);
 }
