@@ -6,7 +6,7 @@
 /*   By: csilva-m <csilva-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/11 18:07:04 by csilva-m         ###   ########.fr       */
+/*   Updated: 2024/10/12 16:42:34 by csilva-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,12 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-
-#define WINDOW_WIDTH 1900
-#define WINDOW_HEIGHT 1000
-#define CUB_SIZE 30
-#define PLAYER_SPEED 5
-#define FOV 60 // Campo de visão
-#define ROTATION_SPEED 0.045
-
+# define WINDOW_WIDTH 1900
+# define WINDOW_HEIGHT 1000
+# define CUB_SIZE 30
+# define PLAYER_SPEED 5
+# define FOV 60 // Campo de visão
+# define ROTATION_SPEED 0.045
 
 enum				e_directions
 {
@@ -68,36 +66,34 @@ typedef struct s_flags
 
 typedef struct s_mlx
 {
-	mlx_image_t *image;
-	mlx_image_t *image_map;
-	mlx_t		*mlx_ptr;
-}	t_mlx;
+	mlx_image_t		*image;
+	mlx_image_t		*image_map;
+	mlx_t			*mlx_ptr;
+}					t_mlx;
 
 typedef struct s_player
 {
-	int			p_x;
-	int			p_y;
-	double		angle;
-	float		fov_rd;
-	int			rot;
-	int			l_r;
-	int			u_d;
-}	t_player;
+	int				p_x;
+	int				p_y;
+	double			angle;
+	float			fov_rd;
+	int				rot;
+	int				l_r;
+	int				u_d;
+}					t_player;
 
 typedef struct s_ray //the ray structure
 {
 	double ray_ngl;
 	double distance;
-	int  flag;
-} t_ray;
+	int flag;
+}					t_ray;
 
 // getters
 t_mlx				*get_mlx(void);
 t_player			*get_player(void);
 t_map				*get_map(void);
 t_ray				*get_ray(void);
-
-
 
 // map validation
 void				arguments_validation(int argc, char *map_file);
@@ -144,9 +140,8 @@ void				print_square(mlx_image_t *image, int size, int start_line,
 void				print_map(t_map map);
 
 // process map
-void				fill_top_bottom(t_mlx *mlx, int color_top, int color_bottom);
-void				my_mlx_pixel_put(mlx_image_t *image, int x, int y, int color);
-
-
+void				fill_top_bottom(int t_pixel, int b_pixel, int ray);
+void				my_mlx_pixel_put(mlx_image_t *image, int x, int y,
+						int color);
 
 #endif

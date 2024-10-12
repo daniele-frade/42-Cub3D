@@ -6,7 +6,7 @@
 /*   By: csilva-m <csilva-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:17:57 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/12 16:30:57 by csilva-m         ###   ########.fr       */
+/*   Updated: 2024/10/12 16:43:05 by csilva-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ void render_wall(int ray)
 	if(top_pixel < 0)
 		top_pixel = 0;
 	// printf("Ray: %d, Top: %f, Bot: %f, Wall Height: %f, Distance: %f\n", ray, top_pixel, bot_pixel, wall_height, get_ray()->distance);
-	fill_top_bottom(get_mlx() , get_map()->c_rgb_int, get_map()->f_rgb_int);
+	fill_top_bottom(top_pixel, bot_pixel, ray);
 	draw_wall(ray, top_pixel, bot_pixel);
 
 }

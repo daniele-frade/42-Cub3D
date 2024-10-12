@@ -1,26 +1,15 @@
 #include "../includes/cub3d.h"
 
-void	fill_top_bottom(t_mlx *mlx, int color_top, int color_bottom)
+void	fill_top_bottom(int t_pixel, int b_pixel, int ray)
 {
-	uint32_t	x;
-	uint32_t	y;
-	uint32_t	half_height;
-
-	half_height = mlx->image->height / 2;
-	y = 0;
-	while (y < mlx->image->height)
-	{
-		x = 0;
-		while (x < mlx->image->width)
-		{
-			if (y < half_height)
-				mlx_put_pixel(mlx->image, x, y, color_top);
-			else
-				mlx_put_pixel(mlx->image, x, y, color_bottom);
-			x++;
-		}
-		y++;
-	}
+	int i;
+	i = b_pixel;
+	while(i < WINDOW_HEIGHT)
+		my_mlx_pixel_put(get_mlx()->image, ray, i++, get_map()->f_rgb_int);
+	i = 0;
+	while (i < t_pixel)
+		my_mlx_pixel_put(get_mlx()->image, ray, i++, get_map()->c_rgb_int);
+	
 }
 
 void	my_mlx_pixel_put(mlx_image_t *image, int x, int y, int color)
