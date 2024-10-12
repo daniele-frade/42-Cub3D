@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_functions.c                                   :+:      :+:    :+:   */
+/*   error_and_free.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 16:14:23 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/12 15:13:15 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/10/12 16:42:20 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	free_matrix(char **matrix)
 	free(matrix);
 }
 
-void free_texture(t_map *map)
+void	free_texture(t_map *map)
 {
 	free_matrix(map->matrix);
 	if (map->textures[NO] != NULL)
@@ -52,7 +52,7 @@ void free_texture(t_map *map)
 	error("Error\nWrong texture path\n");
 }
 
-void finalize_and_cleanup(t_map *map)
+void	finalize_and_cleanup(t_map *map)
 {
 	free_matrix(map->matrix);
 	mlx_delete_texture(map->textures[NO]);
@@ -60,4 +60,3 @@ void finalize_and_cleanup(t_map *map)
 	mlx_delete_texture(map->textures[EA]);
 	mlx_delete_texture(map->textures[WE]);
 }
-

@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:17:57 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/12 15:11:41 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/10/12 16:45:00 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int	main(int argc, char **argv)
 	return (0);
 }
 
-
-
 // to delete
 void	print_matrix(char **matrix)
 {
@@ -43,7 +41,7 @@ void	print_matrix(char **matrix)
 		ft_printf("%s\n", matrix[i++]);
 }
 
-void print_info(t_map *map)
+void	print_info(t_map *map)
 {
 	ft_printf("\nCompiled successfully\n\n");
 	ft_printf("Map matrix:\n");

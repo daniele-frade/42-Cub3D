@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/12 15:16:55 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/10/12 16:41:22 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void		finalize_and_cleanup(t_map *map);
 void		key_data(mlx_key_data_t data, void *map);
 
 // print info (to delete)
-void	print_matrix(char **matrix);
-void	print_info(t_map *map);
+void		print_matrix(char **matrix);
+void		print_info(t_map *map);
 
 #endif
