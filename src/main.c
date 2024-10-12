@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:17:57 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/12 16:45:00 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/10/12 16:47:37 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,3 @@ void	print_info(t_map *map)
 	print_matrix(map->text_path);
 	ft_printf("\n");
 }
-
-// rodar com valgrind:
-// valgrind --suppressions=codam.sup --leak-check=full --show-leak-kinds=all ./cub3D maps/info/4.0-mixed_infos_OKAY.cub

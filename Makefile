@@ -59,3 +59,6 @@ fclean: clean
 re: fclean all
 
 .PHONY: all bonus clean fclean re
+
+# rodar com valgrind:
+# valgrind --suppressions=codam.sup --leak-check=full --show-leak-kinds=all ./cub3D maps/info/4.0-mixed_infos_OKAY.cub
