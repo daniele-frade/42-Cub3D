@@ -27,7 +27,7 @@ void	my_mlx_pixel_put(mlx_image_t *image, int x, int y, int color)
 {
 	if (x < 0)
 		return ;
-	else if (x >= WINDOW_HEIGHT)
+	else if (x >= WINDOW_WIDTH)
 		return ;
 	if (y < 0)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: csilva-m <csilva-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:17:57 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/11 18:06:27 by csilva-m         ###   ########.fr       */
+/*   Updated: 2024/10/12 16:30:57 by csilva-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_player(void)
 	
 	player->p_x = get_map()->p_position_col * CUB_SIZE + CUB_SIZE / 2;
 	player->p_y = get_map()->p_position_line * CUB_SIZE + CUB_SIZE / 2;
-	player->fov_rd = 0.0174533; // calculo de campo de visão em radiandos
+	player->fov_rd = (FOV * M_PI) / 180; // calculo de campo de visão em radiandos
 	if(get_map()->map_matrix[get_map()->p_position_line][get_map()->p_position_col] == 'W')
 		player->angle = M_PI;
 	else if(get_map()->map_matrix[get_map()->p_position_line][get_map()->p_position_col]  == 'E')
@@ -189,10 +189,8 @@ void render_wall(int ray)
 	if(top_pixel < 0)
 		top_pixel = 0;
 	// printf("Ray: %d, Top: %f, Bot: %f, Wall Height: %f, Distance: %f\n", ray, top_pixel, bot_pixel, wall_height, get_ray()->distance);
+	fill_top_bottom(get_mlx() , get_map()->c_rgb_int, get_map()->f_rgb_int);
 	draw_wall(ray, top_pixel, bot_pixel);
-	// uint32_t  ceil = get_map()->c_rgb_int;
-	// uint32_t  floor = get_map()->f_rgb_int;
-	// fill_top_bottom(get_mlx() , ceil, floor);
 
 }
 
@@ -265,6 +263,11 @@ void minimap(void)
 
 }
 
+//void	hook(double move_x, double move_y)
+//{
+	
+//}
+
 void game_loop(void *param)
 {
 	(void)param;
@@ -279,6 +282,8 @@ void game_loop(void *param)
 	mlx->image->instances[0].z = -1;
 	raycaster();
 	minimap();
+	//draw_player();
+	//hook(0, 0);
 
 }
 
@@ -286,7 +291,7 @@ void	init(void)
 {
 	t_mlx	*mlx;
 	mlx = get_mlx();
-	mlx->mlx_ptr = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3d", 0);
+	mlx->mlx_ptr = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3d", 1);
 	init_player();
 	mlx_loop_hook(mlx->mlx_ptr, &game_loop, NULL);
 	mlx_loop(mlx->mlx_ptr);
