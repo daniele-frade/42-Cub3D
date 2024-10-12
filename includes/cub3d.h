@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/05 16:41:31 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/10/12 15:16:55 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,18 @@ void		set_textures_path(t_map *map);
 int			load_textures_paths(t_map *map);
 int			is_all_textures_ok(t_map *map);
 
-// error
+// error and free
+int			error(char *msg);
 void		free_and_exit(t_map *map, char *msg);
 void		free_matrix(char **matrix);
-int			error(char *msg);
-void		print_matrix(char **matrix);
+void		free_texture(t_map *map);
+void		finalize_and_cleanup(t_map *map);
 
 // MLX
 void		key_data(mlx_key_data_t data, void *map);
-void		print_map2D(t_map *map);
+
+// print info (to delete)
+void	print_matrix(char **matrix);
+void	print_info(t_map *map);
 
 #endif

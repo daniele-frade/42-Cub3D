@@ -17,7 +17,7 @@ SRCS	 = 	$(addprefix $(SRCDIR),	data_validation_01.c \
 									data_validation_05.c \
 									data_processing_01.c \
 									data_processing_02.c \
-									utils.c \
+									error_and_free.c \
 									main.c)
 
 OBJDIR	 =	bin/
