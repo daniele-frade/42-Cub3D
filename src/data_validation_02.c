@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_validation_02.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
+/*   By: danielefrade <danielefrade@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 14:14:49 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/05 16:41:54 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/10/13 09:45:48 by danielefrad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 void	data_validation(t_map *map)
 {
 	if (file_has_all_directions(map) == 0)
-		free_and_exit(map, "Error\nInvalid map file (wrong direc)\n");
+		free_and_exit(map, "Error\nInvalid map file\n");
 	if (directions_has_all_paths(map) == 0)
-		free_and_exit(map, "Error\nInvalid map file (wrong paths)\n");
+		free_and_exit(map, "Error\nInvalid map file\n");
 	if (file_has_valid_rgb(map) == 0)
-		free_and_exit(map, "Error\nInvalid map file (wrong rgb)\n");
+		free_and_exit(map, "Error\nInvalid map (invalid rgb)\n");
+	if (map_has_only_valid_chars(map) == 0)
+		free_and_exit(map, "Error\nInvalid map (wrong characteres)\n");
 	if (map_has_empty_line(map) == 0)
 		free_and_exit(map, "Error\nInvalid map (empty line)\n");
-	if (map_has_only_valid_chars(map) == 0)
-		free_and_exit(map, "Error\nInvalid map characteres\n");
 	if (map_has_valid_nb_of_players(map) == 0)
-		free_and_exit(map, "Error\nInvalid number of player\n");
+		free_and_exit(map, "Error\nInvalid map (wrong number of player)\n");
 	if (map_is_closed_by_walls(map) == 0)
-		free_and_exit(map, "Error\nMap is not closed by walls\n");
+		free_and_exit(map, "Error\nInvalid map (not closed by walls)\n");
 }
 
 int	set_direction_flag(char *line, char *direct, int *flag_val)

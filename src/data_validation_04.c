@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_validation_04.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
+/*   By: danielefrade <danielefrade@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 13:40:10 by danielefrad       #+#    #+#             */
-/*   Updated: 2024/10/05 16:49:07 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/10/12 20:46:15 by danielefrad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ int	file_has_valid_rgb(t_map *map)
 {
 	char	**str;
 	int		line;
-	int		flag;
 
 	str = map->matrix;
-	flag = 0;
 	line = 5;
 	while (line >= 0)
 	{
