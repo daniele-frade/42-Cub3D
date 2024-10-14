@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_processing_02.c                                :+:      :+:    :+:   */
+/*   data_processing_02.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
+/*   By: danielefrade <danielefrade@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 13:13:18 by danielefrad       #+#    #+#             */
-/*   Updated: 2024/09/29 17:04:31 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/10/14 09:22:53 by danielefrad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,24 @@ int	is_all_textures_ok(t_map *map)
 		return (0);
 	else
 		return (1);
+}
+
+void	get_map_size(t_map *map)
+{
+	int	line;
+	int	col;
+
+	map->map_height = 0;
+	map->map_width = 0;
+	line = 0;
+	while (map->matrix[line] != NULL)
+	{
+		col = 0;
+		while (map->matrix[line][col] != '\0')
+			col++;
+		if (col > map->map_width)
+			map->map_width = col;
+		map->map_height++;
+		line++;
+	}
 }

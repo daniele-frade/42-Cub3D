@@ -6,7 +6,7 @@
 /*   By: danielefrade <danielefrade@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/13 10:34:54 by danielefrad      ###   ########.fr       */
+/*   Updated: 2024/10/14 09:22:11 by danielefrad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ typedef struct s_map
 	char			**matrix;
 	char			*backup_content;
 	char			**map_matrix;
+	int				map_height;
+	int				map_width;
 	int				p_position_line;
 	int				p_position_col;
 	char			*text_path[5];
@@ -92,6 +94,7 @@ char		*skip_spaces(char *str);
 void		set_textures_path(t_map *map);
 int			load_textures_paths(t_map *map);
 int			is_all_textures_ok(t_map *map);
+void		get_map_size(t_map *map);
 
 // error and free
 int			error(char *msg);
