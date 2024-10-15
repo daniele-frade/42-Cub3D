@@ -6,7 +6,7 @@
 /*   By: csilva-m <csilva-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:17:57 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/15 17:29:09 by csilva-m         ###   ########.fr       */
+/*   Updated: 2024/10/15 20:24:42 by csilva-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ float	get_h_inter(float angl)
 		h_x += x_step;
 		h_y += y_step;
 	}
+	get_ray()->horiz_x = h_x;
+	get_ray()->horiz_y = h_y;
 	return(sqrt(pow(h_x - get_player()->p_x, 2) + pow(h_y - get_player()->p_y, 2)));
 }
 
@@ -145,6 +147,8 @@ float	get_v_inter(float angl)
 		v_x += x_step;
 		v_y += y_step;
 	}
+	get_ray()->vert_x = v_x;
+	get_ray()->vert_y = v_y;
 	return(sqrt(pow(v_x - get_player()->p_x, 2) + pow(v_y - get_player()->p_y, 2)));
 }
 
@@ -188,9 +192,10 @@ void render_wall(int ray)
 		bot_pixel = WINDOW_HEIGHT;
 	if(top_pixel < 0)
 		top_pixel = 0;
-	printf("Ray: %d, Distance: %f\n", ray, get_ray()->distance);
+	//printf("Ray: %d, Distance: %f\n", ray, get_ray()->distance);
 	fill_top_bottom(top_pixel, bot_pixel, ray);
 	draw_wall(ray, top_pixel, bot_pixel);
+	draw_wall_texture(ray, top_pixel, bot_pixel, wall_height);
 
 }
 
@@ -326,7 +331,7 @@ void game_loop(void *param)
 	hook();
 	raycaster();
 
-	//minimap();
+	minimap();
 	//draw_player();
 
 }
@@ -337,9 +342,18 @@ void		init(void)
 	mlx = get_mlx();
 	mlx->mlx_ptr = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3d", 1);
 	init_player();
+
+	t_map *map;
+	map = get_map();
+	//mlx_delete_image(mlx->mlx_ptr, mlx->image);
+
+	mlx->image_map = mlx_new_image(mlx->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	mlx_image_to_window(mlx->mlx_ptr, mlx->image_map, 0, 0);
+	
 	mlx->image = mlx_new_image(mlx->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
 	mlx_image_to_window(mlx->mlx_ptr, mlx->image, 0, 0);
 	mlx_loop_hook(mlx->mlx_ptr, game_loop, NULL);
+	mlx->image->instances[0].z = -1;
 	mlx_key_hook(mlx->mlx_ptr, mlx_key, NULL);
 	mlx_loop(mlx->mlx_ptr);
 	mlx_delete_image(mlx->mlx_ptr, mlx->image);

@@ -6,7 +6,7 @@
 /*   By: csilva-m <csilva-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/15 17:15:31 by csilva-m         ###   ########.fr       */
+/*   Updated: 2024/10/15 20:27:33 by csilva-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,10 @@ typedef struct s_ray //the ray structure
 {
 	double ray_ngl;
 	double distance;
+	double	horiz_x;
+	double	horiz_y;
+	double	vert_x;
+	double	vert_y;
 	int flag;
 }					t_ray;
 
@@ -146,6 +150,9 @@ void				my_mlx_pixel_put(mlx_image_t *image, int x, int y,
 
 void				rotate_player(int i);
 void				mlx_key(mlx_key_data_t keydata, void *param);
+void				draw_wall_texture(int ray ,int t_pixel, int b_pixel, double wall_height);
+float				nor_angle(float angle);
+
 
 
 
