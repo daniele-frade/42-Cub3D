@@ -6,7 +6,7 @@
 /*   By: csilva-m <csilva-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/12 16:42:34 by csilva-m         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:15:31 by csilva-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define WINDOW_WIDTH 1900
-# define WINDOW_HEIGHT 1000
+# define WINDOW_WIDTH 1080
+# define WINDOW_HEIGHT 720
 # define CUB_SIZE 30
 # define PLAYER_SPEED 5
 # define FOV 60 // Campo de visão

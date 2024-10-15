@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: csilva-m <csilva-m@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/15 17:43:26 by csilva-m          #+#    #+#             */
+/*   Updated: 2024/10/15 17:43:26 by csilva-m         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 
 void	fill_top_bottom(int t_pixel, int b_pixel, int ray)
@@ -24,3 +36,5 @@ void	my_mlx_pixel_put(mlx_image_t *image, int x, int y, int color)
 		return ;
 	mlx_put_pixel(image, x, y, color);
 }
+
+

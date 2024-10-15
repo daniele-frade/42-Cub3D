@@ -6,7 +6,7 @@
 /*   By: csilva-m <csilva-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:17:57 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/12 16:43:05 by csilva-m         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:29:09 by csilva-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_player(void)
 	
 	player->p_x = get_map()->p_position_col * CUB_SIZE + CUB_SIZE / 2;
 	player->p_y = get_map()->p_position_line * CUB_SIZE + CUB_SIZE / 2;
-	player->fov_rd = (FOV * M_PI) / 180; // calculo de campo de visão em radiandos
+	player->fov_rd = (FOV * M_PI) / 180;
 	if(get_map()->map_matrix[get_map()->p_position_line][get_map()->p_position_col] == 'W')
 		player->angle = M_PI;
 	else if(get_map()->map_matrix[get_map()->p_position_line][get_map()->p_position_col]  == 'E')
@@ -188,7 +188,7 @@ void render_wall(int ray)
 		bot_pixel = WINDOW_HEIGHT;
 	if(top_pixel < 0)
 		top_pixel = 0;
-	// printf("Ray: %d, Top: %f, Bot: %f, Wall Height: %f, Distance: %f\n", ray, top_pixel, bot_pixel, wall_height, get_ray()->distance);
+	printf("Ray: %d, Distance: %f\n", ray, get_ray()->distance);
 	fill_top_bottom(top_pixel, bot_pixel, ray);
 	draw_wall(ray, top_pixel, bot_pixel);
 
@@ -201,8 +201,8 @@ void raycaster(void)
 	double h_inter;
 	int		ray;
 	ray = 0;
-	get_ray()->ray_ngl = get_player()->angle - (get_player()->fov_rd / 2); // primeiro angulo
-	while (ray <= WINDOW_WIDTH * 2)
+	get_ray()->ray_ngl = get_player()->angle - (get_player()->fov_rd / 2);
+	while (ray <= WINDOW_WIDTH)
 	{
 		get_ray()->flag = 0;
 		h_inter = get_h_inter(nor_angle(get_ray()->ray_ngl));
@@ -215,7 +215,7 @@ void raycaster(void)
 			get_ray()->flag = 1;
 		}
 		render_wall(ray);
-		get_ray()->ray_ngl += (get_player()->fov_rd / WINDOW_WIDTH); // acrescenta o angulo
+		get_ray()->ray_ngl += (get_player()->fov_rd / WINDOW_WIDTH);
 		ray++;
 	}
 	
@@ -248,7 +248,6 @@ void minimap(void)
 	while(map_p[y])
 	{
 		x = 0;
-		jorge();
 
 		while(map_p[y][x])
 		{
@@ -263,46 +262,88 @@ void minimap(void)
 
 }
 
+void	movement(double move_x, double move_y)
+{
+	int x_pos;
+	int y_pos;
+	int new_x;
+	int new_y;
+
+	new_x = roundf(get_player()->p_x + move_x);
+	new_y = roundf(get_player()->p_y + move_y);
+	x_pos = (new_x / CUB_SIZE);
+	y_pos = (new_y / CUB_SIZE);
+	if(get_map()->map_matrix[y_pos][x_pos] != '1' && get_map()->map_matrix[get_player()->p_y / CUB_SIZE][y_pos] != '1' && get_map()->map_matrix[y_pos][get_player()->p_x / CUB_SIZE] )
+	{
+		get_player()->p_x = new_x;
+		get_player()->p_y = new_y;	
+	}
+}
+
 void hook(void)
 {
-	
+	double move_x;
+	double move_y;
+		
 	if (get_player()->rot == 1) //rotate right
 		rotate_player(1);
 	if (get_player()->rot == -1) //rotate left
 		rotate_player(0);
-
+	if(get_player()->l_r == 1)
+	{
+		move_x = -sin(get_player()->angle) * PLAYER_SPEED;	
+		move_y = cos(get_player()->angle) * PLAYER_SPEED;
+	}
+	if(get_player()->l_r == -1)
+	{
+		move_x = sin(get_player()->angle) * PLAYER_SPEED;	
+		move_y = -cos(get_player()->angle) * PLAYER_SPEED;
+	}
+	if(get_player()->u_d == 1)
+	{
+		move_x = cos(get_player()->angle) * PLAYER_SPEED;	
+		move_y = sin(get_player()->angle) * PLAYER_SPEED;
+	}
+	if(get_player()->u_d == -1)
+	{
+		move_x = -cos(get_player()->angle) * PLAYER_SPEED;	
+		move_y = -sin(get_player()->angle) * PLAYER_SPEED;
+	}
+	movement(move_x, move_y);
+		
 }
 
 void game_loop(void *param)
 {
 	(void)param;
-	t_mlx *mlx = get_mlx();
 	// t_map *map;
 	// map = get_map();
-	mlx_delete_image(mlx->mlx_ptr, mlx->image);
-	mlx->image = mlx_new_image(mlx->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
-	mlx_image_to_window(mlx->mlx_ptr, mlx->image, 0, 0);
-	mlx->image_map = mlx_new_image(mlx->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
-	mlx_image_to_window(mlx->mlx_ptr, mlx->image_map, 0, 0);
-	mlx->image->instances[0].z = -1;
-	raycaster();
-	minimap();
-	//draw_player();
+	//mlx_delete_image(mlx->mlx_ptr, mlx->image);
+
+	//mlx->image_map = mlx_new_image(mlx->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	//mlx_image_to_window(mlx->mlx_ptr, mlx->image_map, 0, 0);
+	//mlx->image->instances[0].z = -1;
 	hook();
+	raycaster();
+
+	//minimap();
+	//draw_player();
 
 }
 
-void	init(void)
+void		init(void)
 {
 	t_mlx	*mlx;
 	mlx = get_mlx();
 	mlx->mlx_ptr = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3d", 1);
 	init_player();
-	mlx_loop_hook(mlx->mlx_ptr, &game_loop, NULL);
-	mlx_key_hook(mlx->mlx_ptr, &mlx_key, NULL);
+	mlx->image = mlx_new_image(mlx->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	mlx_image_to_window(mlx->mlx_ptr, mlx->image, 0, 0);
+	mlx_loop_hook(mlx->mlx_ptr, game_loop, NULL);
+	mlx_key_hook(mlx->mlx_ptr, mlx_key, NULL);
 	mlx_loop(mlx->mlx_ptr);
+	mlx_delete_image(mlx->mlx_ptr, mlx->image);
 	mlx_terminate(mlx->mlx_ptr);
-	
 }
 
 int	main(int argc, char **argv)
