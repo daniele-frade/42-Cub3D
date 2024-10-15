@@ -263,10 +263,15 @@ void minimap(void)
 
 }
 
-//void	hook(double move_x, double move_y)
-//{
+void hook(void)
+{
 	
-//}
+	if (get_player()->rot == 1) //rotate right
+		rotate_player(1);
+	if (get_player()->rot == -1) //rotate left
+		rotate_player(0);
+
+}
 
 void game_loop(void *param)
 {
@@ -283,7 +288,7 @@ void game_loop(void *param)
 	raycaster();
 	minimap();
 	//draw_player();
-	//hook(0, 0);
+	hook();
 
 }
 
@@ -294,6 +299,7 @@ void	init(void)
 	mlx->mlx_ptr = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3d", 1);
 	init_player();
 	mlx_loop_hook(mlx->mlx_ptr, &game_loop, NULL);
+	mlx_key_hook(mlx->mlx_ptr, &mlx_key, NULL);
 	mlx_loop(mlx->mlx_ptr);
 	mlx_terminate(mlx->mlx_ptr);
 	

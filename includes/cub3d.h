@@ -144,4 +144,9 @@ void				fill_top_bottom(int t_pixel, int b_pixel, int ray);
 void				my_mlx_pixel_put(mlx_image_t *image, int x, int y,
 						int color);
 
+void				rotate_player(int i);
+void				mlx_key(mlx_key_data_t keydata, void *param);
+
+
+
 #endif
