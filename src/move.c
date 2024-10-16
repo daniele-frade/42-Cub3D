@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 18:56:15 by csilva-m          #+#    #+#             */
-/*   Updated: 2024/10/16 20:12:35 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/10/16 20:42:24 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ void	movement(double move_x, double move_y)
 
 void	release(mlx_key_data_t keydata)
 {
+	// if (keydata.key == MLX_KEY_ESCAPE && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+	// {
+    //     finalize_and_cleanup(get_map());
+	// 	exit(0);
+	// }
 	if (keydata.key == MLX_KEY_A && (keydata.action == MLX_RELEASE))
 		get_player()->l_r = 0;
 	else if (keydata.key == MLX_KEY_D && (keydata.action == MLX_RELEASE))
@@ -51,7 +56,14 @@ void	release(mlx_key_data_t keydata)
 void	mlx_key(mlx_key_data_t keydata, void *param)
 {
 	(void)param;
-	if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS))
+	if (keydata.key == MLX_KEY_ESCAPE && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
+	{
+		finalize_and_cleanup(get_map());
+		mlx_delete_image(get_mlx()->mlx_ptr, get_mlx()->image);
+		mlx_terminate(get_mlx()->mlx_ptr);
+        exit(0);
+	}
+	else if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS))
 		get_player()->l_r = -1;
 	else if (keydata.key == MLX_KEY_D && (keydata.action == MLX_PRESS))
 		get_player()->l_r = 1;
