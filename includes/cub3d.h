@@ -6,7 +6,7 @@
 /*   By: csilva-m <csilva-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/15 20:27:33 by csilva-m         ###   ########.fr       */
+/*   Updated: 2024/10/16 19:30:12 by csilva-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 
 # define WINDOW_WIDTH 1080
 # define WINDOW_HEIGHT 720
-# define CUB_SIZE 30
-# define PLAYER_SPEED 5
+# define CUB_SIZE 16
+# define PLAYER_SPEED 3
 # define FOV 60 // Campo de visão
 # define ROTATION_SPEED 0.045
 
@@ -90,6 +90,8 @@ typedef struct s_ray //the ray structure
 	double	horiz_y;
 	double	vert_x;
 	double	vert_y;
+	double	x;
+	double	y;
 	int flag;
 }					t_ray;
 
@@ -148,11 +150,29 @@ void				fill_top_bottom(int t_pixel, int b_pixel, int ray);
 void				my_mlx_pixel_put(mlx_image_t *image, int x, int y,
 						int color);
 
-void				rotate_player(int i);
-void				mlx_key(mlx_key_data_t keydata, void *param);
+// render
 void				draw_wall_texture(int ray ,int t_pixel, int b_pixel, double wall_height);
 float				nor_angle(float angle);
+int					reverse_bytes(int c);
+double				get_xo(mlx_texture_t *texture);
+int					inter_check(float angle, float *inter, float *step, int is_horizon);
 
+
+// raycaster
+void				raycaster(void);
+int					unit_circle(float angle, char c);
+void				render_wall(int ray);
+
+
+
+// init
+void				init(void);
+
+
+// move
+void				mlx_key(mlx_key_data_t keydata, void *param);
+void				hook(double move_x, double move_y);
+void				rotate_player(int i);
 
 
 
