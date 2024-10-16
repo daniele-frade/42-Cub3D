@@ -18,6 +18,12 @@ SRCS	 = 	$(addprefix $(SRCDIR),	data_validation_01.c \
 									data_processing_01.c \
 									data_processing_02.c \
 									error_and_free.c \
+									getters.c \
+									render.c\
+									render_utils.c\
+									move.c \
+									raycasting.c \
+									init.c \
 									main.c)
 
 OBJDIR	 =	bin/
