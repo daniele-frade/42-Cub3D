@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/16 21:14:10 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/10/17 12:21:24 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,8 +150,6 @@ t_ray		*get_ray(void);
 // MLX
 void		key_data(mlx_key_data_t data, void *map);
 void		print_map2D(t_map *map);
-void		print_square(mlx_image_t *image, int size, int start_line,
-				int start_col, int color);
 
 // process map
 void		fill_top_bottom(int t_pixel, int b_pixel, int ray);
