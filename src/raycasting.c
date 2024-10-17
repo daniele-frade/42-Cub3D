@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 16:26:44 by csilva-m          #+#    #+#             */
-/*   Updated: 2024/10/16 20:37:32 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/10/16 21:03:05 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,7 @@ int	wall_hit(float x, float y)
 		return (0);
 	x_pos = floor(x / CUB_SIZE);
 	y_pos = floor(y / CUB_SIZE);
-
-	// printf("h = %d\n", get_map()->map_height);
-	// printf("w = %d\n", get_map()->map_width);
-	// Mudar essa linha para comparar com o tamanho do mapa
-	if ((y_pos >= 8 || x_pos >= 27))
+	if ((y_pos >= get_map()->map_height || x_pos >= get_map()->map_width))
 		return (0);
 	if (get_map()->map_matrix[y_pos]
 		&& x_pos <= (int)ft_strlen(get_map()->map_matrix[y_pos]))

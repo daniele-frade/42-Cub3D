@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 18:16:33 by csilva-m          #+#    #+#             */
-/*   Updated: 2024/10/16 20:12:14 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/10/16 21:07:17 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	game_loop(void *param)
 	(void)param;
 	hook(0, 0);
 	raycaster();
-	//minimap();
 }
 
 void	init(void)

@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 18:22:41 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/16 20:19:07 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/10/16 21:14:10 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,15 @@ typedef struct s_player
 
 typedef struct s_ray
 {
-	double ray_ngl;
-	double distance;
+	double	ray_ngl;
+	double	distance;
 	double	horiz_x;
 	double	horiz_y;
 	double	vert_x;
 	double	vert_y;
 	double	x;
 	double	y;
-	int flag;
+	int		flag;
 }					t_ray;
 
 // map validation
@@ -142,43 +142,41 @@ void		free_texture(t_map *map);
 void		finalize_and_cleanup(t_map *map);
 
 // getters
-t_mlx				*get_mlx(void);
-t_player			*get_player(void);
-t_map				*get_map(void);
-t_ray				*get_ray(void);
+t_mlx		*get_mlx(void);
+t_player	*get_player(void);
+t_map		*get_map(void);
+t_ray		*get_ray(void);
 
 // MLX
-void				key_data(mlx_key_data_t data, void *map);
-void				print_map2D(t_map *map);
-void				print_square(mlx_image_t *image, int size, int start_line,
-						int start_col, int color);
-
-// debug
-void				print_map(t_map map);
+void		key_data(mlx_key_data_t data, void *map);
+void		print_map2D(t_map *map);
+void		print_square(mlx_image_t *image, int size, int start_line,
+				int start_col, int color);
 
 // process map
-void				fill_top_bottom(int t_pixel, int b_pixel, int ray);
-void				my_mlx_pixel_put(mlx_image_t *image, int x, int y,
-						int color);
+void		fill_top_bottom(int t_pixel, int b_pixel, int ray);
+void		my_mlx_pixel_put(mlx_image_t *image, int x, int y,
+				int color);
 
 // render
-void				draw_wall_texture(int ray ,int t_pixel, int b_pixel, double wall_height);
-float				nor_angle(float angle);
-int					reverse_bytes(int c);
-double				get_xo(mlx_texture_t *texture);
-int					inter_check(float angle, float *inter, float *step, int is_horizon);
+void		draw_wall_texture(int ray, int t_pixel, int b_pixel, \
+				double wall_height);
+float		nor_angle(float angle);
+int			reverse_bytes(int c);
+double		get_xo(mlx_texture_t *texture);
+int			inter_check(float angle, float *inter, float *step, int is_horizon);
 
 // raycaster
-void				raycaster(void);
-int					unit_circle(float angle, char c);
-void				render_wall(int ray);
+void		raycaster(void);
+int			unit_circle(float angle, char c);
+void		render_wall(int ray);
 
 // init
-void				init(void);
+void		init(void);
 
 // move
-void				mlx_key(mlx_key_data_t keydata, void *param);
-void				hook(double move_x, double move_y);
-void				rotate_player(int i);
+void		mlx_key(mlx_key_data_t keydata, void *param);
+void		hook(double move_x, double move_y);
+void		rotate_player(int i);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:17:57 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/16 20:19:34 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/10/16 21:08:29 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	main(int argc, char **argv)
 	t_map	*map;
 
 	map = get_map();
-
 	ft_bzero(map, sizeof(t_map));
 	arguments_validation(argc, argv[1]);
 	check_and_get_file(map, argv[1]);

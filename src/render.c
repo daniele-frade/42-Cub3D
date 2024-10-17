@@ -1,13 +1,12 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: csilva-m <csilva-m@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 18:01:29 by csilva-m          #+#    #+#             */
-/*   Updated: 2024/10/16 18:37:06 by csilva-m         ###   ########.fr       */
+/*   Updated: 2024/10/16 21:06:53 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +88,5 @@ void	render_wall(int ray)
 	if (top_pixel < 0)
 		top_pixel = 0;
 	fill_top_bottom(top_pixel, bot_pixel, ray);
-	//draw_wall(ray, top_pixel, bot_pixel);
 	draw_wall_texture(ray, top_pixel, bot_pixel, wall_height);
 }
