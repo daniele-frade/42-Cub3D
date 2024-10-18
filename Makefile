@@ -1,18 +1,16 @@
-NAME = cub3D
-INCLUDE = -I ./src/ -I $(LIBMLX)/include/MLX42
+NAME 	 = 	cub3D
 
-CFLAGS = -Wall -Werror -Wextra -g3
+CC 		 = 	cc
+FLAGS	 = 	-Wall -Werror -Wextra -g -I. -I./$(INCDIR)
 
-MLX = ./MLX42/build/libmlx42.a
-LIBFT = ./libft/libft.a
-LIBFT_DIR = ./libft/
+MLXFLAGS = 	-ldl -lglfw -pthread -lm
 
-LIBMLX = ./MLX42
-MLXFLAGS = $(MLX) $(INCLUDE) -ldl -lglfw -pthread -lm
+RM 		 = 	rm -rf
+LIBFT 	 = 	libft/libft.a
 
-OBJ_DIR = ./obj
+SRCDIR 	 = 	src/
 
-SOURCES	 = 	$(addprefix src/,	data_validation_01.c \
+SRCS	 = 	$(addprefix $(SRCDIR),	data_validation_01.c \
 									data_validation_02.c \
 									data_validation_03.c \
 									data_validation_04.c \
@@ -20,52 +18,47 @@ SOURCES	 = 	$(addprefix src/,	data_validation_01.c \
 									data_processing_01.c \
 									data_processing_02.c \
 									error_and_free.c \
-									getters.c \
-									render.c\
-									render_utils.c\
-									move.c \
-									raycasting.c \
-									init.c \
 									main.c)
 
-OBJECTS = $(SOURCES:%.c=%.o)
+OBJDIR	 =	bin/
+OBJS	 =	$(patsubst $(SRCDIR)%.c,$(OBJDIR)%.o,$(SRCS))
 
-all: $(MLX) $(LIBFT) $(NAME)
+INCDIR	 =	includes/
+INC		 =	$(INCDIR)cub3d.h
 
-$(NAME): $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) $(MLXFLAGS) $(LIBFT) -o $(NAME)
+HIDE	 = @
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ -I ./includes/cub3D.h
+all: MLX42/build/libmlx42.a $(OBJDIR) $(OBJS) $(LIBFT) $(NAME)
+
+MLX42/build/libmlx42.a:
+	cmake -B build
+	cmake --build build -j4
 
 $(LIBFT):
-	make -C ./libft
+	$(HIDE)make -C ./libft --no-print-directory --silent
 
-$(MLX):
-	cmake -S ./MLX42 -B ./MLX42/build -DDEBUG=1
-	cmake --build ./MLX42/build -j4
+$(OBJS): $(OBJDIR)%.o : $(SRCDIR)%.c $(INC) | $(OBJDIR)
+	$(HIDE)mkdir -p $(dir $@)
+	$(HIDE)$(CC) $(FLAGS) -c $< -o $@
 
-libclean:
-	@make clean -C ./libft --no-print-directory
+$(NAME): $(OBJS) $(LIBFT)
+	$(HIDE) $(CC) $(OBJS) MLX42/build/libmlx42.a $(LIBFT) -I libft/headers -I MLX42/include $(FLAGS) $(MLXFLAGS) -o $@
 
-libfclean: libclean
-	@make fclean -C ./libft --no-print-directory
 
-clean: libclean
-	@rm -rf $(OBJECTS)
+$(OBJDIR):
+	$(HIDE)mkdir -p $@
 
-fclean: clean libfclean
-	@cd ./MLX42/build && make clean --no-print-directory
-	@rm -f $(NAME)
+clean:
+	$(HIDE)make -C libft clean --silent
+	$(HIDE)$(RM) $(OBJDIR)
+
+fclean: clean
+	$(HIDE)make -C libft fclean --silent
+	$(HIDE)$(RM) $(NAME)
 
 re: fclean all
 
+.PHONY: all bonus clean fclean re
 
-mlxre:
-	cmake --build ./MLX42/build --clean-first --no-print-directory
-
-reall: fclean mlxre all
-
-.PHONY: all clean fclean re mlxre reall libfclean libclean libft
 # rodar com valgrind:
-# valgrind --suppressions=codam.sup --leak-check=full --show-leak-kinds=all ./cub3D maps/...
+# valgrind --suppressions=codam.sup --leak-check=full --show-leak-kinds=all ./cub3D maps/info/4.0-mixed_infos_OKAY.cub

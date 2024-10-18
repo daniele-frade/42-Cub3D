@@ -6,13 +6,13 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 14:04:26 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/16 21:18:37 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/08/08 19:16:11 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-static int	ft_strlen(char *str)
+static int ft_strlen(char *str)
 {
 	int	length;
 

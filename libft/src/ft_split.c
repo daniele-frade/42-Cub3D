@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 14:30:37 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/16 21:17:26 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/09/10 13:46:56 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static size_t	ft_substr_count(const char *s, int c)
 		if (s[i] == c)
 		{
 			i++;
-		}
+		}		
 		else if (s[i] != c)
 		{
 			str_nb++;
