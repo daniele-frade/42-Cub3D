@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_processing_02.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danielefrade <danielefrade@student.42.f    +#+  +:+       +#+        */
+/*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 13:13:18 by danielefrad       #+#    #+#             */
-/*   Updated: 2024/10/14 09:22:53 by danielefrad      ###   ########.fr       */
+/*   Updated: 2024/10/16 20:48:52 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,10 @@ void	get_map_size(t_map *map)
 	map->map_height = 0;
 	map->map_width = 0;
 	line = 0;
-	while (map->matrix[line] != NULL)
+	while (map->map_matrix[line] != NULL)
 	{
 		col = 0;
-		while (map->matrix[line][col] != '\0')
+		while (map->map_matrix[line][col] != '\0')
 			col++;
 		if (col > map->map_width)
 			map->map_width = col;
