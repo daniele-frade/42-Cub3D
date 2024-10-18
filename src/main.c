@@ -3,58 +3,76 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danielefrade <danielefrade@student.42.f    +#+  +:+       +#+        */
+/*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:17:57 by dfrade            #+#    #+#             */
-/*   Updated: 2024/10/14 09:27:49 by danielefrad      ###   ########.fr       */
+/*   Updated: 2024/10/16 21:08:29 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	main(int argc, char **argv)
+int	unit_circle(float angle, char c)
 {
-	t_map	map;
-
-	ft_bzero(&map, sizeof(t_map));
-	arguments_validation(argc, argv[1]);
-	check_and_get_file(&map, argv[1]);
-	data_validation(&map);
-	get_map_matrix(&map);
-	get_player_position(&map);
-	get_map_size(&map);
-	set_textures_path(&map);
-	set_rgb_color(&map);
-	if (is_all_textures_ok(&map) == 0)
-		free_texture(&map);
-	print_info(&map); // to delete
-	finalize_and_cleanup(&map);
+	if (c == 'x')
+	{
+		if (angle > 0 && angle < M_PI)
+			return (1);
+	}
+	else if (c == 'y')
+	{
+		if (angle > (M_PI / 2) && angle < (3 * M_PI) / 2)
+			return (1);
+	}
 	return (0);
 }
 
-// to delete
-void	print_matrix(char **matrix)
+int	get_color(int flag)
 {
-	int	i;
-
-	i = 0;
-	while (matrix[i])
-		ft_printf("%s\n", matrix[i++]);
+	get_ray()->ray_ngl = nor_angle(get_ray()->ray_ngl);
+	if (flag == 0)
+	{
+		if (get_ray()->ray_ngl > M_PI / 2 && get_ray()->ray_ngl < 3 * (M_PI
+				/ 2))
+			return (0xB5B5B5FF);
+		else
+			return (0xB5B5B5FF);
+	}
+	else
+	{
+		if (get_ray()->ray_ngl > 0 && get_ray()->ray_ngl < M_PI)
+			return (0xF5F5F5FF);
+		else
+			return (0xF5F5F5FF);
+	}
 }
 
-void	print_info(t_map *map)
+void	draw_wall(int ray, int top, int bot)
 {
-	ft_printf("\nCompiled successfully\n\n");
-	ft_printf("Map matrix:\n");
-	print_matrix(map->map_matrix);
-	ft_printf("\n");
-	ft_printf("Map width: %d\n", map->map_width);
-	ft_printf("Map height: %d\n\n", map->map_height);
-	ft_printf("Player position x: %d\n", map->p_position_line);
-	ft_printf("Player position y: %d\n\n", map->p_position_col);
-	ft_printf("Ceiling RGB value: %u\n", map->c_rgb_int);
-	ft_printf("Floor RGB value: %u\n\n", map->f_rgb_int);
-	ft_printf("Texture paths:\n");
-	print_matrix(map->text_path);
-	ft_printf("\n");
+	int	color;
+
+	color = get_color(get_ray()->flag);
+	while (top < bot)
+		my_mlx_pixel_put(get_mlx()->image, ray, top++, color);
+}
+
+int	main(int argc, char **argv)
+{
+	t_map	*map;
+
+	map = get_map();
+	ft_bzero(map, sizeof(t_map));
+	arguments_validation(argc, argv[1]);
+	check_and_get_file(map, argv[1]);
+	data_validation(map);
+	get_map_matrix(map);
+	get_player_position(map);
+	get_map_size(map);
+	set_textures_path(map);
+	set_rgb_color(map);
+	if (is_all_textures_ok(map) == 0)
+		free_texture(map);
+	init();
+	finalize_and_cleanup(map);
+	return (0);
 }

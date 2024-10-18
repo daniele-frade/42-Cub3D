@@ -6,7 +6,7 @@
 /*   By: dfrade <dfrade@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:49:59 by dfrade            #+#    #+#             */
-/*   Updated: 2023/09/18 19:32:37 by dfrade           ###   ########.fr       */
+/*   Updated: 2024/10/16 21:17:51 by dfrade           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	i = 0;
 	while (i < len)
-	{	
+	{
 		sub_str[i] = s[start];
 		i++;
 		start++;
